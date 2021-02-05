@@ -6,10 +6,15 @@ const cors = require("cors");
 const { addUser, removeUser, getUser, getUsersInRoom } = require("./users");
 
 const router = require("./router");
-
 const app = express();
 const server = http.createServer(app);
-const io = socketio(server);
+const io = socketio(
+  server,
+  (options = {
+    cors: true,
+    origins: ["http://localhost:3000"],
+  })
+);
 
 app.use(cors());
 app.use(router);
