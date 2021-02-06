@@ -1,5 +1,4 @@
 const mongoose = require("mongoose");
-
 const RestaurantSchema = new mongoose.Schema({
   address: {
     building: {
@@ -14,10 +13,10 @@ const RestaurantSchema = new mongoose.Schema({
       lowercase: true,
     },
     zipcode: {
-        type: String,
-        trim: true,
-        lowercase: true,
-      },
+      type: String,
+      trim: true,
+      lowercase: true,
+    },
   },
   city: {
     type: String,
@@ -43,5 +42,5 @@ const RestaurantSchema = new mongoose.Schema({
   },
 });
 
-const Restaurant = mongoose.model("Employee", RestaurantSchema);
+const Restaurant = mongoose.model("Model", RestaurantSchema, "resturant");
 module.exports = Restaurant;
