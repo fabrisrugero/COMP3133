@@ -22,11 +22,6 @@ mongoose.connect(
     useUnifiedTopology: true,
   }
 );
-// const corsOptions = {
-//   origin: "*",
-//   credentials: true,
-//   optionSuccessStatus: 200,
-// };
 app.use(cors());
 app.use(router);
 
@@ -60,7 +55,7 @@ io.on("connect", (socket) => {
 
     io.to(user.room).emit(
       "message",
-      saveChat(user.room, { user: user.name, text: message })
+      saveChat(user.room, { user: user.name, text: message }) // save chat to MongoAtlas
     );
     console.log("save message to database");
     callback();
@@ -70,13 +65,10 @@ io.on("connect", (socket) => {
     const user = removeUser(socket.id);
 
     if (user) {
-      io.to(user.room).emit(
-        "message",
-        saveChat(user.room, {
-          user: "Admin",
-          text: `${user.name} has left.`,
-        })
-      );
+      io.to(user.room).emit("message", {
+        user: "Admin",
+        text: `${user.name} has left.`,
+      });
       io.to(user.room).emit("roomData", {
         room: user.room,
         users: getUsersInRoom(user.room),
