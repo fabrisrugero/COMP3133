@@ -22,7 +22,6 @@ app.get("/restaurants", async (req, res) => {
   if (Object.keys(req.query).length == 0) {
     const restaurants = await restaurantModel.find({});
     try {
-      console.log(restaurants[0].surname);
       res.status(200).send(restaurants);
     } catch (err) {
       res.status(500).send(err);
@@ -64,8 +63,6 @@ app.get("/restaurants/restaurants/:name", async (req, res) => {
 
 //http://localhost:3000/restaurant
 app.post("/restaurant", async (req, res) => {
-  console.log(req.body);
-
   try {
     await restaurantModel.insertMany(req.body, (err) => {
       if (err) res.send(err);
@@ -75,3 +72,5 @@ app.post("/restaurant", async (req, res) => {
     res.status(500).send(err);
   }
 });
+
+module.exports = app
