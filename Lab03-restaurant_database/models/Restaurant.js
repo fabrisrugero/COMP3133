@@ -1,19 +1,28 @@
-const mongoose = require('mongoose');
-const Address = require('./address').schema;
+const mongoose = require("mongoose");
 
 const RestaurantSchema = new mongoose.Schema({
-  address: Address,
+  address: {
+    building: {
+      type: Number,
+    },
+    street: {
+      type: String,
+    },
+    zipcode: {
+      type: Number,
+    },
+  },
   city: {
-    type: String
+    type: String,
   },
   cuisine: {
-    type: String
+    type: String,
   },
   name: {
-    type: String
+    type: String,
   },
-  restaurant_id:{
-    type: Number
+  restaurant_id: {
+    type: Number,
   },
 });
 

@@ -30,7 +30,7 @@ app.get("/restaurants", async (req, res) => {
     const sortBy = req.query.sortBy;
     const restaurants = await restaurantModel
       .find({})
-      .select("id cuisines name city resturant_id")
+      .select("id cuisines name city restaurant_id")
       .sort({ resturant_id: sortBy });
     try {
       res.status(200).send(restaurants);
@@ -41,11 +41,11 @@ app.get("/restaurants", async (req, res) => {
 });
 
 //http://localhost:3000/restaurants/Delicatessen
-app.get("/restaurants/restaurants/:name", async (req, res) => {
+app.get("/restaurants/:name", async (req, res) => {
   const name = req.params.name;
   try {
     const restaurants = restaurantModel
-      .find({ cuisine: name }, { _id: 0, cuisines: 1, name: 1, city: 1 })
+      .find({ cuisine: name }, { _id: 0, cuisine: 1, name: 1, city: 1 })
       .where("city")
       .ne("Brooklyn")
       .sort("name")
