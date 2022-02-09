@@ -4,7 +4,6 @@ import io from "socket.io-client";
 import queryString from "query-string";
 import { jsx, css } from "@emotion/react";
 import { useState, useEffect } from "react";
-import TextContainer from "./TextContainer";
 import Messages from "./Messages";
 import InfoBar from "./InfoBar";
 import Input from "./Input";
@@ -15,7 +14,7 @@ const outerContainer = css`
   justify-content: center;
   align-items: center;
   height: 100vh;
-  background-color: #1a1a1d;
+  background-color: #ffffff;
 
   .container {
     display: flex;
@@ -44,14 +43,13 @@ const outerContainer = css`
     }
   }
 `;
-// const ENDPOINT = 'https://project-chat-application.herokuapp.com/';
-const ENDPOINT = "http://localhost:5000/";
+// const ENDPOINT = "http://localhost:5001/";
+const ENDPOINT = "http://10.0.0.87:5001/";
 let socket;
 
 const Chat = ({ location }) => {
   const [name, setName] = useState("");
   const [room, setRoom] = useState("");
-  const [users, setUsers] = useState("");
   const [message, setMessage] = useState("");
   const [messages, setMessages] = useState([]);
 
@@ -68,7 +66,6 @@ const Chat = ({ location }) => {
         alert(error);
       } else {
         axios.get(`${ENDPOINT}chats/rooms/${room}`).then((res) => {
-          // console.log(res.data);
           setMessages(res.data);
         });
       }
@@ -78,10 +75,6 @@ const Chat = ({ location }) => {
   useEffect(() => {
     socket.on("message", (message) => {
       setMessages((messages) => [...messages, message]);
-    });
-
-    socket.on("roomData", ({ users }) => {
-      setUsers(users);
     });
   }, []);
 
@@ -104,7 +97,6 @@ const Chat = ({ location }) => {
           sendMessage={sendMessage}
         />
       </div>
-      <TextContainer users={users} />
     </div>
   );
 };

@@ -2,9 +2,9 @@ const cors = require("cors");
 const http = require("http");
 const express = require("express");
 const router = require("./router");
-const chatModel = require("./chat");
 const mongoose = require("mongoose");
 const socketio = require("socket.io");
+const groupChatModel = require("./models/GroupChat");
 const { addUser, removeUser, getUser, getUsersInRoom } = require("./users");
 const app = express();
 const server = http.createServer(app);
@@ -12,11 +12,11 @@ const io = socketio(
   server,
   (options = {
     cors: true,
-    origins: ["http://localhost:3000"],
+    origins: ["http://localhost:3000", "http://10.0.0.87:3000"],
   })
 );
 mongoose.connect(
-  "mongodb+srv://RFabris:mC1q7m12D2PObVHC@cluster0.lw10r.mongodb.net/gbc_full_stack?retryWrites=true&w=majority",
+  "mongodb+srv://RFabris:chesss@cluster0.vpwwg.mongodb.net/ChatDB?retryWrites=true&w=majority",
   {
     useNewUrlParser: true,
     useUnifiedTopology: true,
@@ -55,7 +55,7 @@ io.on("connect", (socket) => {
 
     io.to(user.room).emit(
       "message",
-      saveChat(user.room, { user: user.name, text: message }) // save chat to MongoAtlas
+      saveGroupChat({ room: user.room, from_user: user.name, message })
     );
     callback();
   });
@@ -76,12 +76,12 @@ io.on("connect", (socket) => {
   });
 });
 
-server.listen(process.env.PORT || 5000, () =>
+server.listen(process.env.PORT || 5001, () =>
   console.log(`Server has started.`)
 );
 
-const saveChat = (room, message) => {
-  const chatMessage = new chatModel({ room, ...message });
+const saveGroupChat = (message) => {
+  const chatMessage = new groupChatModel(message);
   try {
     chatMessage.save((err) => {
       if (err) {

@@ -63,12 +63,12 @@ const messagestyles = css`
   }
 `;
 
-const Message = ({ message: { text, user }, name }) => {
+const Message = ({ message: { message, from_user }, name }) => {
   let isSentByCurrentUser = false;
 
   const trimmedName = name.trim().toLowerCase();
 
-  if (user === trimmedName) {
+  if (from_user === trimmedName) {
     isSentByCurrentUser = true;
   }
 
@@ -81,7 +81,7 @@ const Message = ({ message: { text, user }, name }) => {
     >
       <p className="sentText pr-10">{trimmedName}</p>
       <div className="messageBox backgroundBlue">
-        <p className="messageText colorWhite">{ReactEmoji.emojify(text)}</p>
+        <p className="messageText colorWhite">{ReactEmoji.emojify(message)}</p>
       </div>
     </div>
   ) : (
@@ -92,9 +92,9 @@ const Message = ({ message: { text, user }, name }) => {
       `}
     >
       <div className="messageBox backgroundLight">
-        <p className="messageText colorDark">{ReactEmoji.emojify(text)}</p>
+        <p className="messageText colorDark">{ReactEmoji.emojify(message)}</p>
       </div>
-      <p className="sentText pl-10 ">{user}</p>
+      <p className="sentText pl-10 ">{from_user}</p>
     </div>
   );
 };

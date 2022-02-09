@@ -1,9 +1,9 @@
-const chatModel = require("./chat");
+const chatModel = require("./models/GroupChat");
 const express = require("express");
 const router = express.Router();
 
-// const ORIGIN = 'https://project-chat-application.herokuapp.com/';
-const ORIGIN = "http://localhost:3000";
+// const ORIGIN = "http://localhost:3000";
+const ORIGIN = "http://10.0.0.87:3000";
 
 router.get("/", (req, res) => {
   res.setHeader("Access-Control-Allow-Origin", ORIGIN);

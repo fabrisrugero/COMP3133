@@ -10,7 +10,7 @@ const joinOuterContainer = css`
   text-align: center;
   height: 100vh;
   align-items: center;
-  background-color: #1a1a1d;
+  background-color: #ffffff;
 
   .joinInnerContainer {
     width: 20%;
@@ -18,15 +18,15 @@ const joinOuterContainer = css`
 
   .joinInput {
     border-radius: 0;
-    padding: 15px 20px;
-    width: 100%;
+    padding: 15px 10%;
+    width: 78%;
   }
 
   .heading {
-    color: white;
+    color: black;
     font-size: 2.5em;
     padding-bottom: 10px;
-    border-bottom: 2px solid white;
+    border-bottom: 2px solid black;
   }
 
   .button {
@@ -34,7 +34,7 @@ const joinOuterContainer = css`
     text-transform: uppercase;
     text-decoration: none;
     background: #2979ff;
-    padding: 20px;
+    padding: 20px 10%;
     border-radius: 5px;
     display: inline-block;
     border: none;
@@ -43,16 +43,6 @@ const joinOuterContainer = css`
 
   .mt-20 {
     margin-top: 20px;
-  }
-
-  @media (min-width: 320px) and (max-width: 480px) {
-    .joinOuterContainer {
-      height: 100%;
-    }
-
-    .joinInnerContainer {
-      width: 90%;
-    }
   }
 
   button:focus {

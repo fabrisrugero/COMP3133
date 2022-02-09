@@ -4,7 +4,7 @@ import { jsx, css } from "@emotion/react";
 
 const form = css`
   display: flex;
-  border-top: 2px solid #d3d3d3;
+  border: 2px solid #d3d3d3;
 
   .input {
     border: none;

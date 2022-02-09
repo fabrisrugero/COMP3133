@@ -1,30 +1,30 @@
 const mongoose = require("mongoose");
 
-const ChatSchema = new mongoose.Schema({
+const GroupChatSchema = new mongoose.Schema({
+  from_user: {
+    trim: true,
+    type: String,
+    required: true,
+    lowercase: true,
+  },
   room: {
     trim: true,
     type: String,
     required: true,
     lowercase: true,
   },
-  user: {
-    trim: true,
-    type: String,
-    required: true,
-    lowercase: true,
-  },
-  text: {
+  message: {
     trim: true,
     type: String,
     required: true,
     lowercase: true,
     maxlength: 300,
   },
-  created: {
+  date_sent: {
     type: Date,
     default: Date.now,
   },
 });
 
-const Employee = mongoose.model("Chat", ChatSchema);
-module.exports = Employee;
+const GroupChat = mongoose.model("GroupChat", GroupChatSchema);
+module.exports = GroupChat;
