@@ -54,28 +54,33 @@ const Chat = ({ location }) => {
   const [messages, setMessages] = useState([]);
 
   useEffect(() => {
+    let isMounted = true;
     const { name, room } = queryString.parse(location.search);
-
     socket = io(ENDPOINT);
-
     setRoom(room);
     setName(name);
-
     socket.emit("join", { name, room }, (error) => {
       if (error) {
         alert(error);
       } else {
         axios.get(`${ENDPOINT}chats/rooms/${room}`).then((res) => {
-          setMessages(res.data);
+          if (isMounted) setMessages(res.data);
         });
       }
+      return () => {
+        isMounted = false;
+      };
     });
   }, [location.search]);
 
   useEffect(() => {
+    let isMounted = true;
     socket.on("message", (message) => {
-      setMessages((messages) => [...messages, message]);
+      if (isMounted) setMessages((messages) => [...messages, message]);
     });
+    return () => {
+      isMounted = false;
+    };
   }, []);
 
   const sendMessage = (event) => {
