@@ -19,11 +19,16 @@ const ChatUserSchema = new mongoose.Schema({
     required: true,
     lowercase: true,
   },
+  password: {
+    trim: true,
+    type: String,
+    required: true,
+  },
   createdon: {
     type: Date,
     default: Date.now,
   },
 });
 
-const ChatUser = mongoose.model("ChatUser", ChatUserSchema);
+const ChatUser = mongoose.model("chatuser", ChatUserSchema);
 module.exports = ChatUser;

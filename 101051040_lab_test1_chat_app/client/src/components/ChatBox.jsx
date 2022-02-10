@@ -43,10 +43,10 @@ const outerContainer = css`
     }
   }
 `;
-// const ENDPOINT = "http://localhost:5001/";
-const ENDPOINT = "http://10.0.0.87:5001/";
+const ENDPOINT = "http://localhost:5001/";
+// const ENDPOINT = "http://10.0.0.87:5001/";
 let socket;
-
+let type;
 const Chat = ({ location }) => {
   const [name, setName] = useState("");
   const [room, setRoom] = useState("");
@@ -55,17 +55,27 @@ const Chat = ({ location }) => {
 
   useEffect(() => {
     let isMounted = true;
-    const { name, room } = queryString.parse(location.search);
+    const { name, room, roomtype } = queryString.parse(location.search);
     socket = io(ENDPOINT);
+    type = roomtype;
     setRoom(room);
     setName(name);
     socket.emit("join", { name, room }, (error) => {
       if (error) {
         alert(error);
-      } else {
-        axios.get(`${ENDPOINT}chats/rooms/${room}`).then((res) => {
-          if (isMounted) setMessages(res.data);
+      } else if (roomtype === "Public") {
+        axios.get(`${ENDPOINT}publichat/rooms/${room}`).then((res) => {
+          console.log(res.data);
+          if (isMounted) setMessages((messages) => [...messages, ...res.data]);
         });
+      } else if (roomtype === "Private") {
+        axios
+          .get(`${ENDPOINT}privatechat/from/${name}/to/${room}`)
+          .then((res) => {
+            console.log(res.data);
+            if (isMounted)
+              setMessages((messages) => [...messages, ...res.data]);
+          });
       }
       return () => {
         isMounted = false;
@@ -75,7 +85,7 @@ const Chat = ({ location }) => {
 
   useEffect(() => {
     let isMounted = true;
-    socket.on("message", (message) => {
+    socket.on("servermessage", (message) => {
       if (isMounted) setMessages((messages) => [...messages, message]);
     });
     return () => {
@@ -85,16 +95,15 @@ const Chat = ({ location }) => {
 
   const sendMessage = (event) => {
     event.preventDefault();
-
     if (message) {
-      socket.emit("sendMessage", message, () => setMessage(""));
+      socket.emit(`send${type}Message`, message, () => setMessage(""));
     }
   };
 
   return (
     <div css={outerContainer}>
       <div className="container">
-        <InfoBar room={room} />
+        <InfoBar room={room} name={name} socket={socket} />
         <Messages messages={messages} name={name} />
         <Input
           message={message}

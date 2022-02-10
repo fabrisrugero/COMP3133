@@ -30,14 +30,14 @@ const infobar = css`
     margin-right: 5%;
   }
 `;
-const InfoBar = ({ room }) => (
+const InfoBar = ({ name, room, socket }) => (
   <div css={infobar}>
     <div className="leftInnerContainer">
       <img className="onlineIcon" src={onlineIcon} alt="online icon" />
       <h3>{room}</h3>
     </div>
     <div className="rightInnerContainer">
-      <Link onClick={() => console.log("user disconnected")} to={`/`}>
+      <Link onClick={() => socket.emit("disconect")} to={`/lobby?name=${name}`}>
         <img src={closeIcon} alt="close icon" />
       </Link>
     </div>

@@ -3,6 +3,7 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { jsx, css } from "@emotion/react";
+import { useHistory } from "react-router-dom";
 import axios from "axios";
 
 const joinOuterContainer = css`
@@ -47,6 +48,7 @@ const joinOuterContainer = css`
 // const ENDPOINT = "http://localhost:5001/";
 const ENDPOINT = "http://10.0.0.87:5001/";
 const SignInOrUp = () => {
+  const history = useHistory();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [lastname, setLastname] = useState("");
@@ -95,23 +97,30 @@ const SignInOrUp = () => {
               />
             </div>
             <Link
-              onClick={(e) => {
-                if (!username || !password || !firstname || !lastname)
-                  e.preventDefault();
-                else {
+              onClick={() => {
+                if (username || password || firstname || lastname) {
                   const creds = `?username=${username}&password=${password}`;
                   const fullname = `&firstname=${firstname}&lastname=${lastname}`;
                   axios
-                    .get(`${ENDPOINT}chats/signUp/${creds}${fullname}`)
+                    .get(`${ENDPOINT}chats/signup/${creds}${fullname}`)
                     .then((res) => {
                       console.log(res);
+                      history.push(`/lobby?name=${username}`);
                     })
                     .catch((error) => {
-                      console.log(error);
+                      const newLine = "\r\n"
+                      let msg = error.message;
+                      msg += newLine;
+                      msg += "400 = username or user already axists";
+                      msg += newLine;
+                      msg += "401 = invalid username or password";
+                      msg += newLine;
+                      msg += "404 = invalid url or url not found";
+                      alert(msg);
                     });
                 }
               }}
-              to={`/lobby`}
+              to="#"
             >
               <button className={"button mt-20"} type="submit">
                 Sign Up
@@ -124,21 +133,29 @@ const SignInOrUp = () => {
         ) : (
           <React.Fragment>
             <Link
-              onClick={(e) => {
-                if (!username || !password) e.preventDefault();
-                else {
+              onClick={() => {
+                if (username || password) {
                   const params = `?username=${username}&password=${password}`;
                   axios
-                    .get(`${ENDPOINT}chats/signIn/${params}`)
+                    .get(`${ENDPOINT}chats/signin/${params}`)
                     .then((res) => {
                       console.log(res);
+                      history.push(`/lobby?name=${username}`);
                     })
                     .catch((error) => {
-                      console.log(error);
+                      const newLine = "\r\n"
+                      let msg = error.message;
+                      msg += newLine;
+                      msg += "400 = username or user already axists";
+                      msg += newLine;
+                      msg += "401 = invalid username or password";
+                      msg += newLine;
+                      msg += "404 = invalid url or url not found";
+                      alert(msg);
                     });
                 }
               }}
-              to={`/lobby`}
+              to="#"
             >
               <button className={"button mt-20"} type="submit">
                 Sign In

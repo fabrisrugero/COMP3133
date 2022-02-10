@@ -1,8 +1,9 @@
 /** @jsxRuntime classic */
 /** @jsx jsx */
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { jsx, css } from "@emotion/react";
+import { useHistory, useLocation } from "react-router-dom";
 
 const joinOuterContainer = css`
   display: flex;
@@ -50,25 +51,38 @@ const joinOuterContainer = css`
     outline: 0;
   }
 `;
+let reduxValue = "";
 const Lobby = () => {
-  const [name, setName] = useState("");
+  const history = useHistory();
+  const location = useLocation();
   const [room, setRoom] = useState("");
+  const [name, setName] = useState("");
   const [isPrivateChat, setIsPrivateChat] = useState(false);
+  useEffect(() => {
+    const queryParams = new URLSearchParams(location.search);
+    if (queryParams.has("name")) {
+      reduxValue = queryParams.get("name");
+      history.replace({ search: "" });
+    } else if (reduxValue === "") history.push("/");
+    else setName(reduxValue);
+  }, [history, location]);
+
   return (
     <div css={joinOuterContainer}>
       <div className="joinInnerContainer">
-        {isPrivateChat ? (
+        {!isPrivateChat ? (
           <React.Fragment>
-            <Link to="#" onClick={() => setIsPrivateChat(false)}>
+            <Link to="#" onClick={() => setIsPrivateChat(true)}>
               click here for private chat
             </Link>
             <h1 className="heading">Public Chat</h1>
             <div>
               <input
+                value={name}
+                type="text"
+                readOnly={true}
                 placeholder="Name"
                 className="joinInput"
-                type="text"
-                onChange={(e) => setName(e.target.value)}
               />
             </div>
             <div>
@@ -76,7 +90,7 @@ const Lobby = () => {
                 value={room}
                 name="predefined_groups"
                 className="predefinedGroups"
-                onChange={(e) => setRoom(e ? e.target.value : "")}
+                onChange={(e) => setRoom(e.target.value)}
               >
                 <option value="News">News</option>
                 <option value="Covid19">Covid19</option>
@@ -89,7 +103,7 @@ const Lobby = () => {
             </div>
             <Link
               onClick={(e) => (!name || !room ? e.preventDefault() : null)}
-              to={`/chat?private=false&name=${name}&room=${room}`}
+              to={`/chat?roomtype=Public&name=${name}&room=${room}`}
             >
               <button className={"button mt-20"} type="submit">
                 Join Group
@@ -98,29 +112,36 @@ const Lobby = () => {
           </React.Fragment>
         ) : (
           <React.Fragment>
-            <Link to="#" onClick={() => setIsPrivateChat(true)}>
+            <Link
+              to="#"
+              onClick={() => {
+                setRoom("News");
+                setIsPrivateChat(false);
+              }}
+            >
               click here for public chat
             </Link>
             <h1 className="heading">Private Chat</h1>
             <div>
               <input
                 type="text"
+                value={name}
+                readOnly={true}
                 placeholder="Name"
                 className="joinInput"
-                onChange={(e) => setName(e.target.value)}
               />
             </div>
             <div>
               <input
                 type="text"
-                placeholder="Room"
+                placeholder="to_username"
                 className="joinInput mt-20"
                 onChange={(e) => setRoom(e.target.value)}
               />
             </div>
             <Link
               onClick={(e) => (!name || !room ? e.preventDefault() : null)}
-              to={`/chat?private=true&name=${name}&room=${room}`}
+              to={`/chat?roomtype=Private&name=${name}&room=${room}`}
             >
               <button className={"button mt-20"} type="submit">
                 Join Room
