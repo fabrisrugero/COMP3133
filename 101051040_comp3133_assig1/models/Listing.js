@@ -5,10 +5,12 @@ const ListingSchema = new mongoose.Schema({
     trim: true,
     type: String,
     lowercase: true,
+    alias: 'listingId',
     required: [true, "Please enter a listing ID"],
   },
   listing_title: {
     trim: true,
+    alias: 'name',
     type: String,
     lowercase: true,
     required: [true, "Please enter a listing title"],
@@ -39,6 +41,7 @@ const ListingSchema = new mongoose.Schema({
     trim: true,
     type: String,
     lowercase: true,
+    alias: 'postalCode',
     required: [true, "Please enter a description"],
   },
   price: {

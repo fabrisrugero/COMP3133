@@ -18,9 +18,9 @@ module.exports = {
         throw new Error(err);
       }
     },
-    async getListingsByName(_, { listingName }) {
+    async getListingsByName(_, { Name }) {
       try {
-        return await Listing.find({ listingName });
+        return await Listing.find({ Name });
       } catch (err) {
         throw new Error(err);
       }

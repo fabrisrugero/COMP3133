@@ -3,14 +3,11 @@ const checkAuth = require("../../util/check-auth");
 
 module.exports = {
   Mutation: {
-    async createListing(_, { body }, context) {
+    async createListing(_, { listingInput }, context) {
       const user = checkAuth(context);
-      if (body.trim() === "") throw new Error("Listing is empty");
       const newListing = new Listing({
-        body,
-        user: user.id,
+        ...listingInput,
         username: user.username,
-        createdAt: new Date().toISOString(),
       });
       return await newListing.save();
     },

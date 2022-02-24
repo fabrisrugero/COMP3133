@@ -1,7 +1,7 @@
 {
   "name": "assignment",
   "version": "1.0.0",
-  "description": "Advanve mongodb, mongoos and express",
+  "description": "graphql",
   "main": "index.js",
   "scripts": {
     "start": "nodemon index.js"
@@ -16,6 +16,7 @@
     "express": "^4.17.1",
     "graphql": "15",
     "jsonwebtoken": "^8.5.1",
+    "lodash.merge": "^4.6.2",
     "mongoose": "^5.11.15"
   },
   "devDependencies": {

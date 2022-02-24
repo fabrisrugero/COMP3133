@@ -1,42 +1,76 @@
-const { gql } = require('apollo-server-express');
+const { gql } = require("apollo-server-express");
 
 module.exports = gql`
   type Listing {
-    id: ID!
-    body: String!
-    createdAt: String!
+    name: String!
+    city: String!
+    price: Float!
+    email: String!
+    street: String!
     username: String!
+    listingId: String!
+    postalCode: String!
+    description: String!
   }
+
   type User {
-    id: ID!
+    type: String!
     email: String!
     token: String!
     username: String!
-    createdAt: String!
   }
+
   type Booking {
-    id: ID!
-    createdAt: String!
     username: String!
-    body: String!
+    listingId: String!
+    bookingId: String!
+    bookingEnd: String!
+    bookingDate: String!
+    bookingStart: String!
   }
-  input RegisterInput {
-    username: String!
-    password: String!
-    confirmPassword: String!
+
+  input UserInput {
+    type: String!
     email: String!
+    password: String!
+    username: String!
+    lastname: String!
+    firstname: String!
   }
+
+  input BookingInput {
+    listingId: String!
+    bookingId: String!
+    bookingDate: String!
+    bookingStart: String!
+  }
+
+  input ListingInput {
+    name: String!
+    city: String!
+    price: Float!
+    email: String!
+    street: String!
+    listingId: String!
+    postalCode: String!
+    description: String!
+  }
+
   type Query {
     getListings: [Listing]
-    getListing(postId: ID!): Listing
-  }
-  type Mutation {
-    register(registerInput: RegisterInput): User!
+    getBookingss: [Booking]
+    getMyListings: [Listing]
+    getMyBookings: [Booking]
+    getListingsByName(name: String!): [Listing]
     login(username: String!, password: String!): User!
-    createListing(body: String!): Listing!
-    deleteListing(postId: ID!): String!
-    createBooking(postId: String!, body: String!): Listing!
-    deleteBooking(postId: ID!, commentId: ID!): Listing!
-    likeListing(postId: ID!): Listing!
+    getListingsByPostalCodeOrCity(PostalCodeOrCity: String!): [Listing]
+  }
+
+  type Mutation {
+    register(userInput: UserInput!): User!
+    deleteListing(listingId: String!): String!
+    deleteBooking(bookingId: String!): String!
+    createListing(listingInput: ListingInput!): Listing!
+    createBooking(bookingInput: BookingInput!): Booking!
   }
 `;

@@ -2,17 +2,17 @@ const cors = require("cors");
 const express = require("express");
 const mongoose = require("mongoose");
 const { ApolloServer } = require("apollo-server-express");
-const resolvers = require("./grapqhQl/resolvers");
+const listingQueries = require("./grapqhQl/Listing/queries");
+const listingMutations = require("./grapqhQl/Listing/mutations");
+const bookingMutations = require("./grapqhQl/Booking/mutations");
+const bookingQueries = require("./grapqhQl/Booking/queries");
+const userMutations = require("./grapqhQl/User/mutations");
+const userQueries = require("./grapqhQl/User/queries");
 const typeDefs = require("./grapqhQl/typeDefs");
-
-//Store sensitive information to env variables
+const merge = require("lodash.merge");
 const dotenv = require("dotenv");
 dotenv.config();
-
-//mongoDB Atlas Connection String
 const mongodb_atlas_url = process.env.MONGODB_URL;
-
-//TODO - Replace you Connection String here
 mongoose
   .connect(mongodb_atlas_url, {
     useNewUrlParser: true,
@@ -22,9 +22,16 @@ mongoose
     console.log("Success Mongodb connection", success);
   })
   .catch((err) => {
-    console.log("Error Mongodb connection", error);
+    console.log("Error Mongodb connection", err);
   });
-
+// merge all resolvers into single object
+const resolvers = merge(userMutations, [
+  userQueries,
+  listingQueries,
+  bookingQueries,
+  listingMutations,
+  bookingMutations,
+]);
 const server = new ApolloServer({ typeDefs, resolvers });
 const app = express();
 app.use("*", cors());

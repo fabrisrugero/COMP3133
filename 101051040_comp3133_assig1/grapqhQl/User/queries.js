@@ -1,7 +1,6 @@
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const User = require("../../models/User");
-const { SECRET_KEY } = require("../../config");
 
 function generateToken(user) {
   return jwt.sign(
@@ -10,7 +9,7 @@ function generateToken(user) {
       email: user.email,
       username: user.username,
     },
-    SECRET_KEY,
+    process.env.SECRET_KEY,
     { expiresIn: "1h" }
   );
 }
@@ -18,16 +17,13 @@ function generateToken(user) {
 module.exports = {
   Query: {
     async login(_, { username, password }) {
+      const vagueError = "Username or password mismatch";
       const user = await User.findOne({ username });
-      if (!user) throw new Error("User not found");
+      if (!user) throw new Error(vagueError);
       const match = await bcrypt.compare(password, user.password);
-      if (!match) throw new Error("Wrong crendetials");
+      if (!match) throw new Error(vagueError);
       const token = generateToken(user);
-      return {
-        ...user._doc,
-        id: user._id,
-        token,
-      };
+      return { ...user._doc, token };
     },
   },
 };
