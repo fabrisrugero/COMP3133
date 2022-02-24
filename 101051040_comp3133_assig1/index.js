@@ -9,7 +9,6 @@ const bookingQueries = require("./grapqhQl/Booking/queries");
 const userMutations = require("./grapqhQl/User/mutations");
 const userQueries = require("./grapqhQl/User/queries");
 const typeDefs = require("./grapqhQl/typeDefs");
-const merge = require("lodash.merge");
 const dotenv = require("dotenv");
 dotenv.config();
 const mongodb_atlas_url = process.env.MONGODB_URL;
@@ -24,18 +23,24 @@ mongoose
   .catch((err) => {
     console.log("Error Mongodb connection", err);
   });
-// merge all resolvers into single object
-const resolvers = merge(userMutations, [
-  userQueries,
-  listingQueries,
-  bookingQueries,
-  listingMutations,
-  bookingMutations,
-]);
-const server = new ApolloServer({ typeDefs, resolvers });
 const app = express();
 app.use("*", cors());
 app.use(express.json());
+const server = new ApolloServer({
+  typeDefs,
+  resolvers: {
+    Query: {
+      ...userQueries.Query,
+      ...listingQueries.Query,
+      ...bookingQueries.Query,
+    },
+    Mutation: {
+      ...userMutations.Mutation,
+      ...listingMutations.Mutation,
+      ...bookingMutations.Mutation,
+    },
+  },
+});
 server.applyMiddleware({ app });
 app.listen({ port: process.env.PORT }, () =>
   console.log(`Started at localhost:${process.env.PORT}${server.graphqlPath}`)

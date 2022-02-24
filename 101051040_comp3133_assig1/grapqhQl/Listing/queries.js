@@ -5,15 +5,16 @@ module.exports = {
   Query: {
     async getListings() {
       try {
-        return await Listing.find().sort({ createdAt: -1 });
+        return await Listing.find({});
       } catch (err) {
         throw new Error(err);
       }
     },
-    async getMyListing(_, context) {
+    async getMyListings(_, __, context) {
       const user = checkAuth(context);
+      if (user.type === "customer") throw Error("403 Forbidden");
       try {
-        return await Listing.findById(user.username);
+        return await Listing.find({ username: user.username });
       } catch (err) {
         throw new Error(err);
       }
@@ -27,7 +28,10 @@ module.exports = {
     },
     async getListingsByPostalCodeOrCity(_, { PostalCodeOrCity }) {
       try {
-        return await Listing.findById(PostalCodeOrCity);
+        return await Listing.find().or([
+          { city: PostalCodeOrCity },
+          { postalCode: PostalCodeOrCity },
+        ]);
       } catch (err) {
         throw new Error(err);
       }

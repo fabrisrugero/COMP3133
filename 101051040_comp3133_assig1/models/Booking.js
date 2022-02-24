@@ -18,7 +18,7 @@ const BookingSchema = new mongoose.Schema({
   booking_date: {
     type: Date,
     default: Date.now,
-    alias: bookingDate,
+    alias: 'bookingDate',
   },
   booking_start: {
     type: Date,

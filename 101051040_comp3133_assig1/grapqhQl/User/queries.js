@@ -5,7 +5,7 @@ const User = require("../../models/User");
 function generateToken(user) {
   return jwt.sign(
     {
-      id: user.id,
+      type: user.type,
       email: user.email,
       username: user.username,
     },

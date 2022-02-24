@@ -3,14 +3,11 @@ const checkAuth = require("../../util/check-auth");
 
 module.exports = {
   Mutation: {
-    async createBooking(_, { body }, context) {
+    async createBooking(_, { bookingInput }, context) {
       const user = checkAuth(context);
-      if (body.trim() === "") throw new Error("Booking is empty");
       const newBooking = new Booking({
-        body,
-        user: user.id,
+        ...bookingInput,
         username: user.username,
-        createdAt: new Date().toISOString(),
       });
       return await newBooking.save();
     },
