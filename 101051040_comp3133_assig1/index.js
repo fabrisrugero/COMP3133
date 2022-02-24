@@ -19,19 +19,17 @@ mongoose
     useUnifiedTopology: true,
   })
   .then((success) => {
-    console.log("Success Mongodb connection");
+    console.log("Success Mongodb connection", success);
   })
   .catch((err) => {
-    console.log("Error Mongodb connection");
+    console.log("Error Mongodb connection", error);
   });
 
 const server = new ApolloServer({ typeDefs, resolvers });
 const app = express();
-app.use(express.json());
 app.use("*", cors());
+app.use(express.json());
 server.applyMiddleware({ app });
 app.listen({ port: process.env.PORT }, () =>
-  console.log(
-    `🚀 Server ready at http://localhost:${process.env.PORT}${server.graphqlPath}`
-  )
+  console.log(`Started at localhost:${process.env.PORT}${server.graphqlPath}`)
 );
