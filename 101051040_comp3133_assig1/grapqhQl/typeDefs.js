@@ -22,11 +22,11 @@ module.exports = gql`
 
   type Booking {
     username: String!
-    listingId: String!
-    bookingId: String!
-    bookingEnd: String!
-    bookingDate: String!
-    bookingStart: String!
+    listing_id: String!
+    booking_id: String!
+    booking_end: String!
+    booking_date: String!
+    booking_start: String!
   }
 
   input UserInput {
@@ -39,10 +39,11 @@ module.exports = gql`
   }
 
   input BookingInput {
-    listingId: String!
-    bookingId: String!
-    bookingDate: String!
-    bookingStart: String!
+    listing_id: String!
+    booking_id: String!
+    booking_end: String!
+    booking_date: String!
+    booking_start: String!
   }
 
   input ListingInput {

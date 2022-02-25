@@ -5,12 +5,12 @@ const ListingSchema = new mongoose.Schema({
     trim: true,
     type: String,
     lowercase: true,
-    alias: 'listingId',
+    alias: "listingId",
     required: [true, "Please enter a listing ID"],
   },
   listing_title: {
     trim: true,
-    alias: 'name',
+    alias: "name",
     type: String,
     lowercase: true,
     required: [true, "Please enter a listing title"],
@@ -20,10 +20,6 @@ const ListingSchema = new mongoose.Schema({
     type: String,
     uppercase: true,
     required: [true, "Please enter a description"],
-    validate: function (value) {
-      var emailRegex = /^([\w-\.]+@([\w-]+\.)+[\w-]{2,4})?$/;
-      return emailRegex.test(value);
-    },
   },
   street: {
     trim: true,
@@ -41,7 +37,7 @@ const ListingSchema = new mongoose.Schema({
     trim: true,
     type: String,
     lowercase: true,
-    alias: 'postalCode',
+    alias: "postalCode",
     required: [true, "Please enter a description"],
   },
   price: {

@@ -16,15 +16,12 @@ function generateToken(user) {
 
 module.exports = {
   Mutation: {
-    async register(_, registerInput) {
-      const { username, password } = registerInput;
+    async register(_, { userInput }) {
+      const { username, password } = userInput;
       const user = await User.findOne({ username });
       if (user) throw new Error("Username is taken");
-      const encripted = await bcrypt.hash(password, 12);
-      const newUser = new User({
-        ...registerInput,
-        password: encripted,
-      });
+      encryptedPassword = await bcrypt.hash(password, 12);
+      const newUser = new User({ ...userInput, encryptedPassword });
       const res = await newUser.save();
       const token = generateToken(res);
       return { ...res._doc, token };

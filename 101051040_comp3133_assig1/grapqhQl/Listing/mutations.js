@@ -5,6 +5,7 @@ module.exports = {
   Mutation: {
     async createListing(_, { listingInput }, context) {
       const user = checkAuth(context);
+      if (user.type === "customer") throw Error("403 Forbidden");
       const newListing = new Listing({
         ...listingInput,
         username: user.username,
@@ -18,7 +19,7 @@ module.exports = {
         if (user.username === listing.username) {
           await listing.delete();
           return "Listing deleted successfully";
-        } else throw new Error("Action not allowed");
+        } else throw new Error("403 Forbidden");
       } catch (err) {
         throw new Error(err);
       }

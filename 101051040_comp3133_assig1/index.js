@@ -18,7 +18,7 @@ mongoose
     useUnifiedTopology: true,
   })
   .then((success) => {
-    console.log("Success Mongodb connection", success);
+    console.log("Success Mongodb connection", success.STATES);
   })
   .catch((err) => {
     console.log("Error Mongodb connection", err);
@@ -40,6 +40,7 @@ const server = new ApolloServer({
       ...bookingMutations.Mutation,
     },
   },
+  context: ({ req, res }) => ({ req, res }),
 });
 server.applyMiddleware({ app });
 app.listen({ port: process.env.PORT }, () =>

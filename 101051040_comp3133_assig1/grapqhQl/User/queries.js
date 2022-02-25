@@ -20,7 +20,7 @@ module.exports = {
       const vagueError = "Username or password mismatch";
       const user = await User.findOne({ username });
       if (!user) throw new Error(vagueError);
-      const match = await bcrypt.compare(password, user.password);
+      const match = await bcrypt.compare(password, user.encryptedPassword);
       if (!match) throw new Error(vagueError);
       const token = generateToken(user);
       return { ...user._doc, token };

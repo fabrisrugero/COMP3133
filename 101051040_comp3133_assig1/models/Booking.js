@@ -5,29 +5,24 @@ const BookingSchema = new mongoose.Schema({
     trim: true,
     type: String,
     lowercase: true,
-    alias: "listingId",
     required: [true, "Please enter listing ID"],
   },
   booking_id: {
     trim: true,
     type: String,
     lowercase: true,
-    alias: "bookingId",
     required: [true, "Please enter booking ID"],
   },
   booking_date: {
     type: Date,
     default: Date.now,
-    alias: 'bookingDate',
   },
   booking_start: {
     type: Date,
-    alias: "bookingStart",
     required: [true, "Please enter start date"],
   },
   booking_end: {
     type: Date,
-    alias: "bookingEnd",
     required: [true, "Please enter end date"],
   },
   username: {
@@ -37,6 +32,13 @@ const BookingSchema = new mongoose.Schema({
     required: [true, "Please enter username"],
   },
 });
-
+// Returns a date in 'yyyy-MM-dd' format
+BookingSchema.methods.formatDate = function (dateProperty) {
+  const newDate = new Date(this[dateProperty]);
+  let formattedDate = `${newDate.getFullYear()}-`;
+  formattedDate += `${`0${newDate.getMonth() + 1}`.slice(-2)}-`; // for double digit month
+  formattedDate += `${`0${newDate.getDate()}`.slice(-2)}`; // for double digit day
+  return formattedDate;
+};
 const Booking = mongoose.model("Booking", BookingSchema);
 module.exports = Booking;
