@@ -1,4 +1,3 @@
-const cors = require("cors");
 const express = require("express");
 const mongoose = require("mongoose");
 const { ApolloServer } = require("apollo-server-express");
@@ -24,7 +23,6 @@ mongoose
     console.log("Error Mongodb connection", err);
   });
 const app = express();
-app.use("*", cors());
 app.use(express.json());
 const server = new ApolloServer({
   typeDefs,
