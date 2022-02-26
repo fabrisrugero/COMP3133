@@ -5,7 +5,7 @@ module.exports = {
   Query: {
     async getListings() {
       try {
-        return await Listing.find({});
+        return await Listing.find({}).exec();
       } catch (err) {
         throw new Error(err);
       }
@@ -14,24 +14,26 @@ module.exports = {
       const user = checkAuth(context);
       if (user.type === "customer") throw Error("403 Forbidden");
       try {
-        return await Listing.find({ username: user.username });
+        return await Listing.find({ username: user.username }).exec();
       } catch (err) {
         throw new Error(err);
       }
     },
-    async getListingsByName(_, { Name }) {
+    async getListingsByName(_, { name }) {
       try {
-        return await Listing.find({ Name });
+        return await Listing.find({
+          listing_title: { $regex: name },
+        }).exec();
       } catch (err) {
         throw new Error(err);
       }
     },
-    async getListingsByPostalCodeOrCity(_, { PostalCodeOrCity }) {
+    async getListingsByPostalCodeOrCity(_, { searchtext }) {
       try {
         return await Listing.find().or([
-          { city: PostalCodeOrCity },
-          { postalCode: PostalCodeOrCity },
-        ]);
+          { city: searchtext },
+          { postal_code: searchtext },
+        ]).exec();
       } catch (err) {
         throw new Error(err);
       }

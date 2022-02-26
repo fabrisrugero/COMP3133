@@ -1,0 +1,294 @@
+{
+	"info": {
+		"_postman_id": "3968ea08-8a2e-4195-b37d-69097faa6a38",
+		"name": "studentId_comp3133_assig1",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Create a new User Profile",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "graphql",
+					"graphql": {
+						"query": "mutation($data: UserInput!) {\n    register( userInput: $data ){\n      type\n      email\n      token\n      username\n    }\n}",
+						"variables": "{\n    \"data\":{\n    \"type\": \"customer\",\n    \"email\": \"fabris@GBC.ca\",\n    \"password\": \"123456$fabris\",\n    \"username\": \"customer\",\n    \"lastname\": \"rugero\",\n    \"firstname\": \"fabris\"\n    }\n}"
+					}
+				},
+				"url": {
+					"raw": "localhost:4000/graphql",
+					"host": [
+						"localhost"
+					],
+					"port": "4000",
+					"path": [
+						"graphql"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Login API - both user and admin  returns JWT token",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "graphql",
+					"graphql": {
+						"query": "query($username: String!, $password: String!) {\n    login( username: $username, password: $password ){\n      type\n      email\n      token\n      username\n    }\n}",
+						"variables": "{\n    \"username\":\"customer\",\n    \"password\":\"123456$fabris\"\n}"
+					}
+				},
+				"url": {
+					"raw": "localhost:4000/graphql",
+					"host": [
+						"localhost"
+					],
+					"port": "4000",
+					"path": [
+						"graphql"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create a new listing (Admin)",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0eXBlIjoiYWRtaW4iLCJlbWFpbCI6IkZBQlJJU0BHQkMuQ0EiLCJ1c2VybmFtZSI6ImZhYmlvIiwiaWF0IjoxNjQ1ODE2MDAxLCJleHAiOjE2NDU4MTk2MDF9.O5ePs1J1-NOp8Tw2-BsrCZagEGGuV7e5EZdypofa8nU",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "graphql",
+					"graphql": {
+						"query": "mutation($data: ListingInput!) {\n    createListing( listingInput: $data ){\n     name\n     city\n     price\n     email\n     street\n     username\n     listingId\n     postalCode\n     description\n    }\n}",
+						"variables": "{\n    \"data\": {\n    \"name\": \"Sea face home for rent\",\n    \"city\": \"Toronto\",\n    \"price\": 150,\n    \"email\": \"contact@hilton.com\",\n    \"street\": \"171 Young Street\",\n    \"listingId\": \"L001\",\n    \"postalCode\": \"M1X0Y5\",\n    \"description\": \"max 1000-character description\"\n  }\n}"
+					}
+				},
+				"url": {
+					"raw": "localhost:4000/graphql",
+					"host": [
+						"localhost"
+					],
+					"port": "4000",
+					"path": [
+						"graphql"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "View all listings created by Admin",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0eXBlIjoiY3VzdG9tZXIiLCJlbWFpbCI6IkZBQlJJU0BHQkMuQ0EiLCJ1c2VybmFtZSI6ImN1c3RvbWVyIiwiaWF0IjoxNjQ1ODE2Njg0LCJleHAiOjE2NDU4MjAyODR9.HREgenGnzGfUrJwqXhUCOti7zg2Vt_eYLdIOc6eBWK4",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "graphql",
+					"graphql": {
+						"query": "query {\n    getListings {\n     name\n     city\n     price\n     email\n     street\n     username\n     listingId\n     postalCode\n     description\n    }\n}",
+						"variables": ""
+					}
+				},
+				"url": {
+					"raw": "localhost:4000/graphql",
+					"host": [
+						"localhost"
+					],
+					"port": "4000",
+					"path": [
+						"graphql"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "View all listing added by Admin user",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0eXBlIjoiYWRtaW4iLCJlbWFpbCI6IkZBQlJJU0BHQkMuQ0EiLCJ1c2VybmFtZSI6ImZhYmlvIiwiaWF0IjoxNjQ1ODE2MDAxLCJleHAiOjE2NDU4MTk2MDF9.O5ePs1J1-NOp8Tw2-BsrCZagEGGuV7e5EZdypofa8nU",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "graphql",
+					"graphql": {
+						"query": "query {\n    getMyListings {\n     name\n     city\n     price\n     email\n     street\n     username\n     listingId\n     postalCode\n     description\n    }\n}",
+						"variables": ""
+					}
+				},
+				"url": {
+					"raw": "localhost:4000/graphql",
+					"host": [
+						"localhost"
+					],
+					"port": "4000",
+					"path": [
+						"graphql"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Book listings as a User",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0eXBlIjoiY3VzdG9tZXIiLCJlbWFpbCI6IkZBQlJJU0BHQkMuQ0EiLCJ1c2VybmFtZSI6ImN1c3RvbWVyIiwiaWF0IjoxNjQ1ODIwNDEzLCJleHAiOjE2NDU4MjQwMTN9.RfVgkk9PGRcnLN_Qe9FL3QScdmNTB_Y38eu1xK6QDF4",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "graphql",
+					"graphql": {
+						"query": "mutation($data: BookingInput!) {\n    createBooking( bookingInput: $data ){\n      username\n      listingId\n      bookingId\n      bookingEnd\n      bookingDate\n      bookingStart\n    }\n}",
+						"variables": "{\n    \"data\": {\n    \"listingId\": \"L001\",\n    \"bookingId\": \"B001\",\n    \"bookingDate\": \"01-24-2022\",\n    \"bookingStart\": \"01-24-2022\",\n    \"bookingEnd\": \"01-24-2022\"\n  }\n}"
+					}
+				},
+				"url": {
+					"raw": "localhost:4000/graphql",
+					"host": [
+						"localhost"
+					],
+					"port": "4000",
+					"path": [
+						"graphql"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "List all User bookings",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0eXBlIjoiY3VzdG9tZXIiLCJlbWFpbCI6IkZBQlJJU0BHQkMuQ0EiLCJ1c2VybmFtZSI6ImN1c3RvbWVyIiwiaWF0IjoxNjQ1ODIwNDEzLCJleHAiOjE2NDU4MjQwMTN9.RfVgkk9PGRcnLN_Qe9FL3QScdmNTB_Y38eu1xK6QDF4",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "graphql",
+					"graphql": {
+						"query": "query{\n    getMyBookings {\n        username\n        listing_id\n        booking_id\n        booking_end\n        booking_date\n        booking_start\n    }\n}",
+						"variables": ""
+					}
+				},
+				"url": {
+					"raw": "localhost:4000/graphql",
+					"host": [
+						"localhost"
+					],
+					"port": "4000",
+					"path": [
+						"graphql"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Search listing by name",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0eXBlIjoiY3VzdG9tZXIiLCJlbWFpbCI6IkZBQlJJU0BHQkMuQ0EiLCJ1c2VybmFtZSI6ImN1c3RvbWVyIiwiaWF0IjoxNjQ1ODIwNDEzLCJleHAiOjE2NDU4MjQwMTN9.RfVgkk9PGRcnLN_Qe9FL3QScdmNTB_Y38eu1xK6QDF4",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "graphql",
+					"graphql": {
+						"query": "query($name: String!) {\n    getListingsByName(name: $name) {\n     name\n     city\n     price\n     email\n     street\n     username\n     listingId\n     postalCode\n     description\n    }\n}",
+						"variables": "{\n    \"name\":\"home\"\n}"
+					}
+				},
+				"url": {
+					"raw": "localhost:4000/graphql",
+					"host": [
+						"localhost"
+					],
+					"port": "4000",
+					"path": [
+						"graphql"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Search listing by postal City / Postal code",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "graphql",
+					"graphql": {
+						"query": "query($searchtext: String!) {\n    getListingsByPostalCodeOrCity(searchtext: $searchtext) {\n     name\n     city\n     price\n     email\n     street\n     username\n     listingId\n     postalCode\n     description\n    }\n}",
+						"variables": "{\n    \"searchtext\":\"toronto\"\n}"
+					}
+				},
+				"url": {
+					"raw": "localhost:4000/graphql",
+					"host": [
+						"localhost"
+					],
+					"port": "4000",
+					"path": [
+						"graphql"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

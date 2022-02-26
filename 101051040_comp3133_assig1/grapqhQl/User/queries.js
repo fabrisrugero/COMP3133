@@ -18,7 +18,7 @@ module.exports = {
   Query: {
     async login(_, { username, password }) {
       const vagueError = "Username or password mismatch";
-      const user = await User.findOne({ username });
+      const user = await User.findOne({ username }).exec();
       if (!user) throw new Error(vagueError);
       const match = await bcrypt.compare(password, user.encryptedPassword);
       if (!match) throw new Error(vagueError);

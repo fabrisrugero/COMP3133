@@ -18,7 +18,7 @@ module.exports = {
   Mutation: {
     async register(_, { userInput }) {
       const { username, password } = userInput;
-      const user = await User.findOne({ username });
+      const user = await User.findOne({ username }).exec();
       if (user) throw new Error("Username is taken");
       encryptedPassword = await bcrypt.hash(password, 12);
       const newUser = new User({ ...userInput, encryptedPassword });

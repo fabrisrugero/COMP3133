@@ -64,7 +64,7 @@ module.exports = gql`
     getMyBookings: [Booking]
     getListingsByName(name: String!): [Listing]
     login(username: String!, password: String!): User!
-    getListingsByPostalCodeOrCity(PostalCodeOrCity: String!): [Listing]
+    getListingsByPostalCodeOrCity(searchtext: String!): [Listing]
   }
 
   type Mutation {

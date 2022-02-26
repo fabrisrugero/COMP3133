@@ -5,7 +5,7 @@ module.exports = {
   Query: {
     async getBookings() {
       try {
-        const bookings = await Booking.find({});
+        const bookings = await Booking.find({}).exec();
         const formattedBookings = bookings.map((booking) => ({
           ...booking._doc,
           booking_end: booking.formatDate("booking_end"),
@@ -21,14 +21,13 @@ module.exports = {
       const user = checkAuth(context);
       if (user.type === "admin") throw Error("403 Forbidden");
       try {
-        const bookings = await Booking.find({ username: user.username });
+        const bookings = await Booking.find({ username: user.username }).exec();
         const formattedBookings = bookings.map((booking) => ({
           ...booking._doc,
           booking_end: booking.formatDate("booking_end"),
           booking_date: booking.formatDate("booking_date"),
           booking_start: booking.formatDate("booking_start"),
         }));
-        console.log(formattedBookings, bookings);
         return formattedBookings;
       } catch (err) {
         throw new Error(err);
