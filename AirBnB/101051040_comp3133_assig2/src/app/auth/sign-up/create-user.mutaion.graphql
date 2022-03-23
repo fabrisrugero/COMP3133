@@ -1,0 +1,8 @@
+mutation createUser($data: UserInput!) {
+    register( userInput: $data ){
+      type
+      email
+      token
+      username
+    }
+}
