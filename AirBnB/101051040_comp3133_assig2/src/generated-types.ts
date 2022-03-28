@@ -3,9 +3,15 @@ import { Injectable } from '@angular/core';
 import * as Apollo from 'apollo-angular';
 export type Maybe<T> = T | null;
 export type InputMaybe<T> = Maybe<T>;
-export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
-export type MakeOptional<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]?: Maybe<T[SubKey]> };
-export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]: Maybe<T[SubKey]> };
+export type Exact<T extends { [key: string]: unknown }> = {
+  [K in keyof T]: T[K];
+};
+export type MakeOptional<T, K extends keyof T> = Omit<T, K> & {
+  [SubKey in K]?: Maybe<T[SubKey]>;
+};
+export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & {
+  [SubKey in K]: Maybe<T[SubKey]>;
+};
 /** All built-in and custom scalars, mapped to their actual values */
 export type Scalars = {
   ID: string;
@@ -37,7 +43,7 @@ export type BookingInput = {
 
 export enum CacheControlScope {
   Private = 'PRIVATE',
-  Public = 'PUBLIC'
+  Public = 'PUBLIC',
 }
 
 export type Listing = {
@@ -73,26 +79,21 @@ export type Mutation = {
   register: User;
 };
 
-
 export type MutationCreateBookingArgs = {
   bookingInput: BookingInput;
 };
-
 
 export type MutationCreateListingArgs = {
   listingInput: ListingInput;
 };
 
-
 export type MutationDeleteBookingArgs = {
   bookingId: Scalars['String'];
 };
 
-
 export type MutationDeleteListingArgs = {
   listingId: Scalars['String'];
 };
-
 
 export type MutationRegisterArgs = {
   userInput: UserInput;
@@ -101,7 +102,7 @@ export type MutationRegisterArgs = {
 export type Query = {
   __typename?: 'Query';
   getBookings?: Maybe<Array<Maybe<Booking>>>;
-  getListings?: Maybe<Array<Maybe<Listing>>>;
+  getListings: Array<Listing>;
   getListingsByName?: Maybe<Array<Maybe<Listing>>>;
   getListingsByPostalCodeOrCity?: Maybe<Array<Maybe<Listing>>>;
   getMyBookings?: Maybe<Array<Maybe<Booking>>>;
@@ -109,16 +110,13 @@ export type Query = {
   login: User;
 };
 
-
 export type QueryGetListingsByNameArgs = {
   name: Scalars['String'];
 };
 
-
 export type QueryGetListingsByPostalCodeOrCityArgs = {
   searchtext: Scalars['String'];
 };
-
 
 export type QueryLoginArgs = {
   password: Scalars['String'];
@@ -146,27 +144,134 @@ export type CreateUserMutationVariables = Exact<{
   data: UserInput;
 }>;
 
+export type CreateUserMutation = {
+  __typename?: 'Mutation';
+  register: {
+    __typename?: 'User';
+    type: string;
+    email: string;
+    token: string;
+    username: string;
+  };
+};
 
-export type CreateUserMutation = { __typename?: 'Mutation', register: { __typename?: 'User', type: string, email: string, token: string, username: string } };
+export type CreateListingMutationVariables = Exact<{
+  data: ListingInput;
+}>;
+
+export type CreateListingMutation = {
+  __typename?: 'Mutation';
+  createListing: {
+    __typename?: 'Listing';
+    name: string;
+    city: string;
+    price: number;
+    email: string;
+    street: string;
+    username: string;
+    listingId: string;
+    postalCode: string;
+    description: string;
+  };
+};
+
+export type ListingsQueryVariables = Exact<{ [key: string]: never }>;
+
+export type ListingsQuery = {
+  __typename?: 'Query';
+  getListings: Array<{
+    __typename?: 'Listing';
+    name: string;
+    city: string;
+    price: number;
+    email: string;
+    street: string;
+    username: string;
+    listingId: string;
+    postalCode: string;
+    description: string;
+  }>;
+};
 
 export const CreateUserDocument = gql`
-    mutation createUser($data: UserInput!) {
-  register(userInput: $data) {
-    type
-    email
-    token
-    username
-  }
-}
-    `;
-
-  @Injectable({
-    providedIn: 'root'
-  })
-  export class CreateUserGQL extends Apollo.Mutation<CreateUserMutation, CreateUserMutationVariables> {
-    document = CreateUserDocument;
-    
-    constructor(apollo: Apollo.Apollo) {
-      super(apollo);
+  mutation createUser($data: UserInput!) {
+    register(userInput: $data) {
+      type
+      email
+      token
+      username
     }
   }
+`;
+
+@Injectable({
+  providedIn: 'root',
+})
+export class CreateUserGQL extends Apollo.Mutation<
+  CreateUserMutation,
+  CreateUserMutationVariables
+> {
+  document = CreateUserDocument;
+
+  constructor(apollo: Apollo.Apollo) {
+    super(apollo);
+  }
+}
+export const CreateListingDocument = gql`
+  mutation createListing($data: ListingInput!) {
+    createListing(listingInput: $data) {
+      name
+      city
+      price
+      email
+      street
+      username
+      listingId
+      postalCode
+      description
+    }
+  }
+`;
+
+@Injectable({
+  providedIn: 'root',
+})
+export class CreateListingGQL extends Apollo.Mutation<
+  CreateListingMutation,
+  CreateListingMutationVariables
+> {
+  document = CreateListingDocument;
+
+  constructor(apollo: Apollo.Apollo) {
+    super(apollo);
+  }
+}
+export const ListingsDocument = gql`
+  query listings {
+    getListings {
+      name
+      city
+      price
+      email
+      street
+      username
+      listingId
+      postalCode
+      description
+    }
+  }
+`;
+
+@Injectable({
+  providedIn: 'root',
+})
+export class ListingsGQL extends Apollo.Query<
+  ListingsQuery,
+  ListingsQueryVariables
+> {
+  document = ListingsDocument;
+
+  constructor(apollo: Apollo.Apollo) {
+    super(apollo);
+  }
+}

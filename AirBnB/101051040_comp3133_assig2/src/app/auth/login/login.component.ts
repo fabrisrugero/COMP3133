@@ -1,46 +1,41 @@
-
-import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { FormControl, Validators } from '@angular/forms';
+import { LoginService } from './login.service';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
-  styleUrls: ['./login.component.scss']
+  styleUrls: ['./login.component.scss'],
 })
 export class LoginComponent implements OnInit {
-  @Output() onSubmitEvent = new EventEmitter();
-  @Input() submitLabel: string;
-
   email = new FormControl('', [Validators.required, Validators.email]);
   password = new FormControl('', [Validators.required]);
 
-  constructor() {
-    this.submitLabel = "login"
-  }
+  constructor(
+    private readonly loginService: LoginService,
+    private readonly router: Router
+  ) {}
 
   ngOnInit(): void {}
 
   getEmailErrorMessage() {
-    if (this.email.hasError('required')) {
-      return 'You must enter a value.';
-    }
-
+    if (this.email.hasError('required')) return 'You must enter a value.';
     return this.email.hasError('email') ? 'Not a valid email' : '';
   }
 
   getPasswordErrorMessage() {
-    if (this.password.hasError('required')) {
-      return 'You must enter a value.';
-    }
-
+    if (this.password.hasError('required')) return 'You must enter a value.';
     return '';
   }
 
   onSubmit() {
-    this.onSubmitEvent.emit({
-      email: this.email.value,
+    let loginRequest = {
+      username: this.email.value,
       password: this.password.value,
+    };
+    this.loginService.login(loginRequest).subscribe(() => {
+      this.router.navigate(['/']);
     });
   }
-
 }

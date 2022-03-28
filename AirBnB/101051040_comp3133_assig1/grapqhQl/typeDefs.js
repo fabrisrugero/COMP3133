@@ -58,7 +58,7 @@ module.exports = gql`
   }
 
   type Query {
-    getListings: [Listing]
+    getListings: [Listing!]!
     getBookings: [Booking]
     getMyListings: [Listing]
     getMyBookings: [Booking]

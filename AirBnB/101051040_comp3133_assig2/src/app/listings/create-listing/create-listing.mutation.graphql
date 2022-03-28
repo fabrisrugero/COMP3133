@@ -1,0 +1,13 @@
+mutation createListing($data: ListingInput!) {
+    createListing( listingInput: $data ){
+     name
+     city
+     price
+     email
+     street
+     username
+     listingId
+     postalCode
+     description
+    }
+}

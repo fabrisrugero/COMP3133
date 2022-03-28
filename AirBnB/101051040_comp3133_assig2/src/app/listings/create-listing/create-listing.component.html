@@ -1,0 +1,14 @@
+
+<div class="container">
+    <h2>Create listing</h2>
+    <mat-form-field appearance="outline">
+      <mat-label>listing Name</mat-label>
+      <input type="text" matInput [formControl]="ListingName" required />
+      <mat-error *ngIf="ListingName.invalid">
+        {{ getListingNameError() }}
+      </mat-error>
+    </mat-form-field>
+    <button mat-raised-button color="primary" (click)="createListing()">
+      Create
+    </button>
+  </div>

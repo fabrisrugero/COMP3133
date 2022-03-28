@@ -1,0 +1,10 @@
+<ul class="Listings">
+    <li class="Listing" *ngFor="let Listing of Listings$ | async">
+      <mat-card (click)="onListingClick(Listing.listingId)">
+        <h3>{{ Listing.name }}</h3>
+      </mat-card>
+    </li>
+  </ul>
+  <button mat-fab color="primary" class="fab" (click)="onFabClick()">
+    <mat-icon>add</mat-icon>
+  </button>
