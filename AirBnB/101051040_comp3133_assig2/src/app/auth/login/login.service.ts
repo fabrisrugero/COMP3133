@@ -9,6 +9,6 @@ export class LoginService {
   constructor(private readonly httpClient: HttpClient) {}
 
   login(loginRequest: { username: string; password: string }) {
-    return this.httpClient.post<User>('localhost:4000/api/auth/login', loginRequest);
+    return this.httpClient.post<User>('api/auth/login', loginRequest);
   }
 }

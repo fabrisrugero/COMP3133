@@ -35,7 +35,8 @@ export class LoginComponent implements OnInit {
       password: this.password.value,
     };
     this.loginService.login(loginRequest).subscribe(() => {
-      this.router.navigate(['/']);
+      console.log('sdfdsf')
+      this.router.navigate(['/listings']);
     });
   }
 }

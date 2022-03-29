@@ -9,6 +9,7 @@ const userMutations = require("./grapqhQl/User/mutations");
 const userQueries = require("./grapqhQl/User/queries");
 const typeDefs = require("./grapqhQl/typeDefs");
 const dotenv = require("dotenv");
+
 dotenv.config();
 const mongodb_atlas_url = process.env.MONGODB_URL;
 mongoose
@@ -24,6 +25,14 @@ mongoose
   });
 const app = express();
 app.use(express.json());
+app.post("/auth/login", async (req, res) => {
+  console.log(req.body);
+  let user = await userQueries.Query.login(null, req.body);
+  res.send(user);
+});
+app.get("/auth", (req, res) => {
+  res.send(true);
+});
 const server = new ApolloServer({
   typeDefs,
   resolvers: {

@@ -20,6 +20,7 @@ export class ListingsComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    console.log("sdfdsfdsffdfds")
     this.Listings$ = this.ListingsGql.watch().valueChanges.pipe(
       map((result) => result.data.getListings)
     );

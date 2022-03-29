@@ -8,21 +8,22 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
-import { APOLLO_OPTIONS } from 'apollo-angular';
+import { ApolloModule, APOLLO_OPTIONS } from 'apollo-angular';
 import { InMemoryCache } from '@apollo/client/core';
-import { HttpClientModule } from '@angular/common/http'
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [AppComponent],
   imports: [
     BrowserModule,
+    AppRoutingModule,
+    HttpClientModule,
+    ApolloModule,
+    NoopAnimationsModule,
     HeaderModule,
     LoginModule,
     SignUpModule,
     ListingsModule,
-    AppRoutingModule,
-    HttpClientModule,
-    NoopAnimationsModule,
   ],
   providers: [
     {
@@ -31,7 +32,7 @@ import { HttpClientModule } from '@angular/common/http'
         return {
           cache: new InMemoryCache(),
           link: httpLink.create({
-            uri: 'localhost:4000/graphql',
+            uri: 'api/graphql',
           }),
         };
       },

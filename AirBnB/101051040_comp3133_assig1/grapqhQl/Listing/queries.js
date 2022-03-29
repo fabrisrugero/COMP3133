@@ -4,11 +4,14 @@ const checkAuth = require("../../util/check-auth");
 module.exports = {
   Query: {
     async getListings() {
+      let listings = [];
       try {
-        return await Listing.find({}).exec();
+        listings = await Listing.find({}).exec();
       } catch (err) {
         throw new Error(err);
       }
+      console.log(listings);
+      return listings;
     },
     async getMyListings(_, __, context) {
       const user = checkAuth(context);
@@ -30,10 +33,9 @@ module.exports = {
     },
     async getListingsByPostalCodeOrCity(_, { searchtext }) {
       try {
-        return await Listing.find().or([
-          { city: searchtext },
-          { postal_code: searchtext },
-        ]).exec();
+        return await Listing.find()
+          .or([{ city: searchtext }, { postal_code: searchtext }])
+          .exec();
       } catch (err) {
         throw new Error(err);
       }

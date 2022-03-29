@@ -16,7 +16,7 @@ export class AuthService {
   ) {}
 
   isAuthenticated() {
-    return this.httpClient.get<boolean>('localhost:4000/api/auth').pipe(
+    return this.httpClient.get<boolean>('api/auth').pipe(
       tap(() => {
         this.authenticated.next(true);
       }),
@@ -25,7 +25,7 @@ export class AuthService {
   }
 
   logout() {
-    this.httpClient.post('localhost:4000/api/auth/logout', {}).subscribe(() => {
+    this.httpClient.post('api/auth/logout', {}).subscribe(() => {
       this.authenticated.next(false);
       this.router.navigate(['/login']);
     });
