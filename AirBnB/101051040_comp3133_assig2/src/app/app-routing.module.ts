@@ -21,11 +21,12 @@ const routes: Routes = [
   },
   {
     path: '',
-    redirectTo: 'listings',
+    pathMatch: 'full',
+    redirectTo: '/listings',
   },
   {
     path: '**',
-    redirectTo: '',
+    redirectTo: '/listings',
   },
 ];
 

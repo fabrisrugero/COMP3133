@@ -10,7 +10,6 @@ module.exports = {
       } catch (err) {
         throw new Error(err);
       }
-      console.log(listings);
       return listings;
     },
     async getMyListings(_, __, context) {

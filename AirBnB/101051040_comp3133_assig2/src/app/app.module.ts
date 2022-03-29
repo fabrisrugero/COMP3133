@@ -12,6 +12,8 @@ import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { ApolloModule, APOLLO_OPTIONS } from 'apollo-angular';
 import { InMemoryCache } from '@apollo/client/core';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { LocalStorageService } from './auth/auth.storageservice';
+import { JWTTokenService } from './auth/auth.jwtservice';
 
 @NgModule({
   declarations: [AppComponent],
@@ -44,6 +46,8 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
       useClass: UniversalAppInterceptor,
       multi: true,
     },
+    LocalStorageService,
+    JWTTokenService,
   ],
   bootstrap: [AppComponent],
 })

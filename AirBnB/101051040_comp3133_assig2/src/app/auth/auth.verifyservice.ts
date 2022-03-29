@@ -1,4 +1,4 @@
-import { Subject } from 'rxjs';
+import { of, Subject } from 'rxjs';
 import { Router } from '@angular/router';
 import { Injectable } from '@angular/core';
 import { JWTTokenService } from './auth.jwtservice';
@@ -18,17 +18,19 @@ export class AuthService {
   ) {}
 
   isAuthenticated() {
-    if (!this.jwtService.isTokenExpired()) {
-      this.authenticated.next(true);
-    } else {
+    let authenticated: boolean = false;
+    if (!this.jwtService.isTokenExpired())
+      this.authenticated.next((authenticated = true));
+    else {
       const storedJWT = this.authStorageService.get('jwtToken');
       if (storedJWT) {
         this.jwtService.setToken(storedJWT);
-        if (!this.jwtService.isTokenExpired()) this.authenticated.next(true);
+        if (!this.jwtService.isTokenExpired())
+          this.authenticated.next((authenticated = true));
       }
     }
-    this.authenticated.next(false);
-    return this.authenticated;
+    this.authenticated.next(authenticated);
+    return of(authenticated);
   }
 
   logout() {

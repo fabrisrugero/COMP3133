@@ -24,38 +24,48 @@ export class JWTTokenService {
   getDecodedToken() {
     return jwt_decode(this.jwtToken);
   }
-  
+
   decodeToken() {
     if (this.jwtToken) {
-      this.decodedToken = jwt_decode(this.jwtToken);
+      try {
+        this.decodedToken = jwt_decode(this.jwtToken);
+      } catch (error) {
+        console.log(error);
+        this.decodedToken = {};
+      }
     }
   }
   getUser() {
     this.decodeToken();
-    return this.decodedToken ? this.decodedToken['username'] : null;
+    return Object.keys(this.decodedToken).length > 0
+      ? this.decodedToken['username']
+      : null;
   }
 
   getEmail() {
     this.decodeToken();
-    return this.decodedToken ? this.decodedToken['email'] : null;
+    return Object.keys(this.decodedToken).length > 0
+      ? this.decodedToken['email']
+      : null;
   }
 
   getUserRole() {
     this.decodeToken();
-    return this.decodedToken ? this.decodedToken['type'] : null;
+    return Object.keys(this.decodedToken).length > 0
+      ? this.decodedToken['type']
+      : null;
   }
 
   getExpiryTime() {
     this.decodeToken();
-    return this.decodedToken ? this.decodedToken['exp'] : '0';
+    return Object.keys(this.decodedToken).length > 0
+      ? this.decodedToken['exp']
+      : '1000';
   }
 
   isTokenExpired(): boolean {
     const expiryTime: number = parseInt(this.getExpiryTime());
-    if (expiryTime > 0) {
-      return 1000 * expiryTime - new Date().getTime() < 5000;
-    } else {
-      return false;
-    }
+    if (expiryTime > 0) return 1000 * expiryTime - new Date().getTime() < 5000;
+    else return false;
   }
 }
