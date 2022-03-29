@@ -34,15 +34,26 @@ export class LoginComponent implements OnInit {
     return '';
   }
 
+  isUser(pet: User | { error: string }): pet is User {
+    return (pet as User).token !== undefined;
+  }
+
   onSubmit() {
     let loginRequest = {
       username: this.email.value,
       password: this.password.value,
     };
-    this.loginService.login(loginRequest).subscribe((user: User) => {
-      this.authStorageService.set('jwtToken', user.token);
-      this.jwtService.setToken(user.token);
-      this.router.navigate(['/listings']);
-    });
+    this.loginService
+      .login(loginRequest)
+      .subscribe((result: User | { error: string }) => {
+        console.log(result);
+        if (this.isUser(result)) {
+          this.authStorageService.set('jwtToken', result.token);
+          this.jwtService.setToken(result.token);
+          this.router.navigate(['/listings']);
+        } else {
+          console.log(result.error);
+        }
+      });
   }
 }

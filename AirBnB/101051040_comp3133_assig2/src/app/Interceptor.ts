@@ -3,7 +3,7 @@ import { LocalStorageService } from "./auth/auth.storageservice";
 import { HttpInterceptor, HttpHandler, HttpRequest } from '@angular/common/http';
 
 @Injectable()
-export class UniversalAppInterceptor implements HttpInterceptor {
+export class Interceptor implements HttpInterceptor {
 
   constructor( private authService: LocalStorageService) { }
 

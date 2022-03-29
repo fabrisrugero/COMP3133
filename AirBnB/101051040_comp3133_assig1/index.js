@@ -26,8 +26,12 @@ mongoose
 const app = express();
 app.use(express.json());
 app.post("/auth/login", async (req, res) => {
-  let user = await userQueries.Query.login(null, req.body);
-  res.send(user);
+  try {
+    let user = await userQueries.Query.login(null, req.body);
+    res.send(user);
+  } catch (error) {
+    res.send({ error: error.message });
+  }
 });
 const server = new ApolloServer({
   typeDefs,

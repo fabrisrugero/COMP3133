@@ -1,4 +1,4 @@
-import { UniversalAppInterceptor } from './UniversalAppInterceptor';
+import { Interceptor } from './Interceptor';
 import { ListingsModule } from './listings/listings.module';
 import { SignUpModule } from './auth/sign-up/sign-up.module';
 import { LoginModule } from './auth/login/login.module';
@@ -37,14 +37,27 @@ import { JWTTokenService } from './auth/auth.jwtservice';
           link: httpLink.create({
             uri: 'api/graphql',
           }),
+          defaultOptions: {
+            watchQuery: {
+              fetchPolicy: 'cache-and-network',
+              errorPolicy: 'all',
+            },
+            query: {
+              fetchPolicy: 'network-only',
+              errorPolicy: 'all',
+            },
+            mutate: {
+              errorPolicy: 'all',
+            },
+          },
         };
       },
       deps: [HttpLink],
     },
     {
-      provide: HTTP_INTERCEPTORS,
-      useClass: UniversalAppInterceptor,
       multi: true,
+      provide: HTTP_INTERCEPTORS,
+      useClass: Interceptor,
     },
     LocalStorageService,
     JWTTokenService,
