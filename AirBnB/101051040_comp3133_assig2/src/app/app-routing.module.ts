@@ -20,6 +20,10 @@ const routes: Routes = [
     component: SignUpComponent,
   },
   {
+    path: '',
+    redirectTo: 'listings',
+  },
+  {
     path: '**',
     redirectTo: '',
   },

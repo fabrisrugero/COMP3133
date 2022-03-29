@@ -14,13 +14,12 @@ export class ListingsComponent implements OnInit {
   Listings$: Observable<Listing[]> = new Observable<Listing[]>();
 
   constructor(
+    private readonly router: Router,
     private readonly dialog: MatDialog,
-    private readonly ListingsGql: ListingsGQL,
-    private readonly router: Router
+    private readonly ListingsGql: ListingsGQL
   ) {}
 
   ngOnInit(): void {
-    console.log("sdfdsfdsffdfds")
     this.Listings$ = this.ListingsGql.watch().valueChanges.pipe(
       map((result) => result.data.getListings)
     );

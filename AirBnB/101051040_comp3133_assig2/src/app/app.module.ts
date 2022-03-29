@@ -1,3 +1,4 @@
+import { UniversalAppInterceptor } from './UniversalAppInterceptor';
 import { ListingsModule } from './listings/listings.module';
 import { SignUpModule } from './auth/sign-up/sign-up.module';
 import { LoginModule } from './auth/login/login.module';
@@ -10,7 +11,7 @@ import { AppComponent } from './app.component';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { ApolloModule, APOLLO_OPTIONS } from 'apollo-angular';
 import { InMemoryCache } from '@apollo/client/core';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 
 @NgModule({
   declarations: [AppComponent],
@@ -19,11 +20,11 @@ import { HttpClientModule } from '@angular/common/http';
     AppRoutingModule,
     HttpClientModule,
     ApolloModule,
-    NoopAnimationsModule,
     HeaderModule,
     LoginModule,
     SignUpModule,
     ListingsModule,
+    NoopAnimationsModule,
   ],
   providers: [
     {
@@ -37,6 +38,11 @@ import { HttpClientModule } from '@angular/common/http';
         };
       },
       deps: [HttpLink],
+    },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: UniversalAppInterceptor,
+      multi: true,
     },
   ],
   bootstrap: [AppComponent],

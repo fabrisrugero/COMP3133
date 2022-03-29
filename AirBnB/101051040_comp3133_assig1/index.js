@@ -30,9 +30,6 @@ app.post("/auth/login", async (req, res) => {
   let user = await userQueries.Query.login(null, req.body);
   res.send(user);
 });
-app.get("/auth", (req, res) => {
-  res.send(true);
-});
 const server = new ApolloServer({
   typeDefs,
   resolvers: {
