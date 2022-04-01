@@ -5,10 +5,11 @@ import { LoginModule } from './auth/login/login.module';
 import { HeaderModule } from './header/header.module';
 import { HttpLink } from 'apollo-angular/http';
 import { NgModule } from '@angular/core';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ApolloModule, APOLLO_OPTIONS } from 'apollo-angular';
 import { InMemoryCache } from '@apollo/client/core';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
@@ -26,7 +27,8 @@ import { JWTTokenService } from './auth/auth.jwtservice';
     LoginModule,
     SignUpModule,
     ListingsModule,
-    NoopAnimationsModule,
+    MatProgressSpinnerModule,
+    BrowserAnimationsModule,
   ],
   providers: [
     {
