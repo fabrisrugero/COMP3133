@@ -4,11 +4,11 @@
   bottom: 4rem;
 }
 /* Structure */
-.example-container {
+.listing-container {
   position: relative;
 }
 
-.example-table-container {
+.listing-table-container {
   position: relative;
   min-height: 200px;
   max-height: 400px;
@@ -19,7 +19,7 @@ table {
   width: 100%;
 }
 
-.example-loading-shade {
+.listing-loading-shade {
   position: absolute;
   top: 0;
   left: 0;
@@ -32,7 +32,7 @@ table {
   justify-content: center;
 }
 
-.example-rate-limit-reached {
+.listing-isDataNull {
   max-width: 360px;
   text-align: center;
 }

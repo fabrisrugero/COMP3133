@@ -5,7 +5,6 @@ import { LoginModule } from './auth/login/login.module';
 import { HeaderModule } from './header/header.module';
 import { HttpLink } from 'apollo-angular/http';
 import { NgModule } from '@angular/core';
-import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -27,7 +26,6 @@ import { JWTTokenService } from './auth/auth.jwtservice';
     LoginModule,
     SignUpModule,
     ListingsModule,
-    MatProgressSpinnerModule,
     BrowserAnimationsModule,
   ],
   providers: [
