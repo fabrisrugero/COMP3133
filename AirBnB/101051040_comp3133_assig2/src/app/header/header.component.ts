@@ -8,7 +8,7 @@ import { AuthService } from '../auth/auth.verifyservice';
   styleUrls: ['./header.component.scss'],
 })
 export class HeaderComponent implements OnInit {
-  isLoggedIn$: Observable<boolean>;
+  isLoggedIn$: Observable<number>;
 
   constructor(private readonly authService: AuthService) {
     this.isLoggedIn$ = authService.authenticated$;

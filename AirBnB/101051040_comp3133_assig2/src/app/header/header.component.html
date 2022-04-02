@@ -3,16 +3,19 @@
     <h1>AirBnB</h1>
   </a>
   <ul class="nav">
-    <li>
-      <div *ngIf="(isLoggedIn$ | async) === true; else login">
-        <a (click)="onLogout()">Logout</a>
-      </div>
+    <ng-container *ngIf="(isLoggedIn$ | async) === 1; else admin">
+      <li><a (click)="onLogout()">MyBookings</a></li>
+      <li><a (click)="onLogout()">LogOut</a></li>
+    </ng-container>
+    <ng-template #admin>
+      <ng-container *ngIf="(isLoggedIn$ | async) === 2; else login">
+        <li><a (click)="onLogout()">MyListings</a></li>
+        <li><a (click)="onLogout()">LogOut</a></li>
+      </ng-container>
       <ng-template #login>
-        <a routerLink="/login">Login</a>
+        <li><a routerLink="/login">Login</a></li>
+        <li><a routerLink="/signup">Sign Up</a></li>
       </ng-template>
-    </li>
-    <li *ngIf="(isLoggedIn$ | async) !== true">
-      <a routerLink="/signup">Sign Up</a>
-    </li>
+    </ng-template>
   </ul>
 </mat-toolbar>

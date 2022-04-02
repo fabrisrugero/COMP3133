@@ -1,4 +1,4 @@
-import { tap } from 'rxjs';
+import { map } from 'rxjs/operators';
 import { Injectable } from '@angular/core';
 import { CanActivate, Router } from '@angular/router';
 import { AuthService } from './auth.verifyservice';
@@ -14,8 +14,9 @@ export class AuthGuard implements CanActivate {
 
   canActivate() {
     return this.authService.isAuthenticated().pipe(
-      tap((authenticated) => {
-        if (!authenticated) this.router.navigate(['/login']);
+      map((authenticated) => {
+        if (authenticated === 0) this.router.navigate(['/login']);
+        return authenticated > 0;
       })
     );
   }

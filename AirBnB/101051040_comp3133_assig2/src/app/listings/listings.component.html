@@ -35,8 +35,8 @@
 
       <!-- PostalCode Column -->
       <ng-container matColumnDef="postalCode">
-        <th mat-header-cell *matHeaderCellDef>PostalCode</th>
-        <td mat-cell *matCellDef="let row">{{ row.postalCode }}</td>
+        <mat-header-cell *matHeaderCellDef>PostalCode</mat-header-cell>
+        <mat-cell *matCellDef="let row">{{ row.postalCode }}</mat-cell>
       </ng-container>
 
       <!-- Email Column -->
@@ -47,10 +47,10 @@
 
       <!-- Price Column -->
       <ng-container matColumnDef="price">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header disableClear>
+        <mat-header-cell *matHeaderCellDef mat-sort-header disableClear>
           Price
-        </th>
-        <td mat-cell *matCellDef="let row">{{ row.price | currency }}</td>
+        </mat-header-cell>
+        <mat-cell *matCellDef="let row">{{ row.price | currency }}</mat-cell>
       </ng-container>
 
       <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
