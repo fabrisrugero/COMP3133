@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
+import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../auth/auth.verifyservice';
 
 @Component({

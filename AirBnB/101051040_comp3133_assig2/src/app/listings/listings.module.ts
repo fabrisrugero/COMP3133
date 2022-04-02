@@ -5,7 +5,7 @@ import { MatTableModule } from '@angular/material/table';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ListingsComponent } from './listings.component';
-import { CreateListingModule } from './create-listing/create-listing.module';
+import { CreateListingModule } from '../mylistings/create-listing/create-listing.module';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatDialogModule } from '@angular/material/dialog';

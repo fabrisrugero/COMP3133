@@ -4,12 +4,16 @@ import { LoginComponent } from './auth/login/login.component';
 import { NgModule } from '@angular/core';
 import { AuthGuard } from './auth/auth.guard';
 import { RouterModule, Routes } from '@angular/router';
+import { MylistingsComponent } from './mylistings/mylistings.component';
+import { AvailablelistingsComponent } from './availablelistings/availablelistings.component';
+import { BookingsComponent } from './bookings/bookings.component';
+import { MybookingsComponent } from './mybookings/mybookings.component';
 
 const routes: Routes = [
   {
-    path: 'listings',
+    path: '',
+    pathMatch: 'full',
     component: ListingsComponent,
-    canActivate: [AuthGuard],
   },
   {
     path: 'login',
@@ -20,13 +24,29 @@ const routes: Routes = [
     component: SignUpComponent,
   },
   {
-    path: '',
-    pathMatch: 'full',
-    redirectTo: '/listings',
+    path: 'mylistings',
+    component: MylistingsComponent,
+    canActivate: [AuthGuard],
   },
   {
+    path: 'availablelistings',
+    component: AvailablelistingsComponent,
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'allbookings',
+    component: BookingsComponent,
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'mybookings',
+    component: MybookingsComponent,
+    canActivate: [AuthGuard],
+  },
+
+  {
     path: '**',
-    redirectTo: '/listings',
+    redirectTo: '',
   },
 ];
 

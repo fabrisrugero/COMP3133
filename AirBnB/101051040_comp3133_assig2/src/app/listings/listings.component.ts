@@ -2,7 +2,7 @@ import { Component, ViewChild, AfterViewInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { Listing, ListingsGQL } from '../../generated-types';
-import { CreateListingComponent } from './create-listing/create-listing.component';
+import { CreateListingComponent } from '../mylistings/create-listing/create-listing.component';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { merge, of as observableOf } from 'rxjs';
