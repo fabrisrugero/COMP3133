@@ -18,6 +18,7 @@ export class JWTTokenService {
   }
 
   destroyDecodedToken() {
+    this.jwtToken = '';
     this.decodedToken = {};
   }
 

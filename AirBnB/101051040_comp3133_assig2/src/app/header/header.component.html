@@ -4,15 +4,15 @@
   </a>
   <ul class="nav">
     <ng-container *ngIf="(isLoggedIn$ | async) === 1; else admin">
-      <li><a (click)="onLogout()">AvalaibleListings</a></li>
-      <li><a (click)="onLogout()">MyBookings</a></li>
-      <li><a (click)="onLogout()">LogOut</a></li>
+      <li><a routerLink="/availablelistings">AvailableListings</a></li>
+      <li><a routerLink="/mybookings">MyBookings</a></li>
+      <li><a (click)="onCustomerLogout()">LogOut</a></li>
     </ng-container>
     <ng-template #admin>
       <ng-container *ngIf="(isLoggedIn$ | async) === 2; else login">
-        <li><a (click)="onLogout()">AllBookings</a></li>
-        <li><a (click)="onLogout()">MyListings</a></li>
-        <li><a (click)="onLogout()">LogOut</a></li>
+        <li><a routerLink="/allbookings">AllBookings</a></li>
+        <li><a routerLink="/mylistings">MyListings</a></li>
+        <li><a (click)="onAdminLogout()">LogOut</a></li>
       </ng-container>
       <ng-template #login>
         <li><a routerLink="/login">Login</a></li>

@@ -14,6 +14,10 @@ import { InMemoryCache } from '@apollo/client/core';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { LocalStorageService } from './auth/auth.storageservice';
 import { JWTTokenService } from './auth/auth.jwtservice';
+import { AvailablelistingsModule } from './availablelistings/availablelistings.module';
+import { BookingsModule } from './bookings/bookings.module';
+import { MybookingsModule } from './mybookings/mybookings.module';
+import { MylistingsModule } from './mylistings/mylistings.module';
 
 @NgModule({
   declarations: [AppComponent],
@@ -26,6 +30,10 @@ import { JWTTokenService } from './auth/auth.jwtservice';
     LoginModule,
     SignUpModule,
     ListingsModule,
+    BookingsModule,
+    MybookingsModule,
+    MylistingsModule,
+    AvailablelistingsModule,
     BrowserAnimationsModule,
   ],
   providers: [

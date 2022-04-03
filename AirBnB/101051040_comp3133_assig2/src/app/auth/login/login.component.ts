@@ -50,7 +50,7 @@ export class LoginComponent implements OnInit {
         if (this.isUser(result)) {
           this.authStorageService.set('jwtToken', result.token);
           this.jwtService.setToken(result.token);
-          this.router.navigate(['/listings']);
+          this.router.navigate(['/']);
         } else {
           console.log(result.error);
         }
