@@ -46,7 +46,6 @@ export class LoginComponent implements OnInit {
     this.loginService
       .login(loginRequest)
       .subscribe((result: User | { error: string }) => {
-        console.log(result);
         if (this.isUser(result)) {
           this.authStorageService.set('jwtToken', result.token);
           this.jwtService.setToken(result.token);

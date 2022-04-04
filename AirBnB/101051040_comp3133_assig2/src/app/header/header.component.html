@@ -15,8 +15,12 @@
         <li><a (click)="onAdminLogout()">LogOut</a></li>
       </ng-container>
       <ng-template #login>
-        <li><a routerLink="/login">Login</a></li>
-        <li><a routerLink="/signup">Sign Up</a></li>
+        <li *ngIf="isNotSignInRoute()">
+          <a routerLink="/login">Login</a>
+        </li>
+        <li *ngIf="isNotSignUpRoute()">
+          <a routerLink="/signup">Sign Up</a>
+        </li>
       </ng-template>
     </ng-template>
   </ul>

@@ -31,7 +31,7 @@ export class JWTTokenService {
       try {
         this.decodedToken = jwt_decode(this.jwtToken);
       } catch (error) {
-        console.log(error);
+        console.log('error');
         this.decodedToken = {};
       }
     }
