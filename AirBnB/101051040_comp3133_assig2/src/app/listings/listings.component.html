@@ -55,6 +55,10 @@
 
       <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
       <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+      <!-- Row shown when there is no matching data that will be provided to the wrapper table. -->
+      <tr class="mat-row" *matNoDataRow>
+        <td class="mat-cell" colspan="6">No data</td>
+      </tr>
     </mat-table>
   </div>
 
@@ -64,6 +68,3 @@
     aria-label="Select page of listings search results"
   ></mat-paginator>
 </div>
-<button mat-fab color="primary" class="fab" (click)="onFabClick()">
-  <mat-icon>add</mat-icon>
-</button>

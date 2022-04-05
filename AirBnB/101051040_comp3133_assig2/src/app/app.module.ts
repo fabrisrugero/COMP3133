@@ -18,6 +18,20 @@ import { AvailablelistingsModule } from './availablelistings/availablelistings.m
 import { BookingsModule } from './bookings/bookings.module';
 import { MybookingsModule } from './mybookings/mybookings.module';
 import { MylistingsModule } from './mylistings/mylistings.module';
+import { onError } from '@apollo/client/link/error';
+
+const error = onError(({ graphQLErrors, networkError }) => {
+  if (graphQLErrors)
+    graphQLErrors.map(({ message, locations, path }) =>
+      console.log(
+        `[GraphQL error]: Message: ${JSON.stringify(
+          message
+        )}, Location: ${JSON.stringify(locations)}, Path: ${path}`
+      )
+    );
+
+  if (networkError) console.log(`[Network error]: ${networkError}`);
+});
 
 @NgModule({
   declarations: [AppComponent],
@@ -42,9 +56,11 @@ import { MylistingsModule } from './mylistings/mylistings.module';
       useFactory: (httpLink: HttpLink) => {
         return {
           cache: new InMemoryCache(),
-          link: httpLink.create({
-            uri: 'api/graphql',
-          }),
+          link: error.concat(
+            httpLink.create({
+              uri: 'api/graphql',
+            })
+          ),
           defaultOptions: {
             watchQuery: {
               fetchPolicy: 'cache-and-network',

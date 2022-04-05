@@ -1,8 +1,5 @@
 import { Component, ViewChild, AfterViewInit } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
-import { Router } from '@angular/router';
 import { Listing, ListingsGQL } from '../../generated-types';
-import { CreateListingComponent } from '../mylistings/create-listing/create-listing.component';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { merge, of as observableOf } from 'rxjs';
@@ -30,8 +27,6 @@ export class ListingsComponent implements AfterViewInit {
   @ViewChild(MatSort) sort: MatSort;
 
   constructor(
-    private readonly router: Router,
-    private readonly dialog: MatDialog,
     private readonly ListingsGql: ListingsGQL
   ) {}
 
@@ -56,13 +51,5 @@ export class ListingsComponent implements AfterViewInit {
         })
       )
       .subscribe((data) => (this.data = data));
-  }
-
-  onFabClick() {
-    this.dialog.open(CreateListingComponent);
-  }
-
-  onListingClick(ListingId: string) {
-    this.router.navigate(['/Listings', ListingId]);
   }
 }

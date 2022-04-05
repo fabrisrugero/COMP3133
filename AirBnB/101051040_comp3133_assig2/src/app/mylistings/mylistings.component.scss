@@ -1,0 +1,53 @@
+.fab {
+    position: absolute;
+    right: 4rem;
+    bottom: 4rem;
+  }
+  /* Structure */
+  .listing-container {
+    position: relative;
+  }
+  
+  .listing-table-container {
+    position: relative;
+    min-height: 200px;
+    max-height: 400px;
+    overflow: auto;
+  }
+  
+  table {
+    width: 100%;
+  }
+  
+  .listing-loading-shade {
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 56px;
+    right: 0;
+    background: rgba(0, 0, 0, 0.15);
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .listing-isDataNull {
+    max-width: 360px;
+    text-align: center;
+  }
+  
+  /* Column Widths */
+  .mat-column-listingId {
+    max-width: 3%;
+  }
+  .mat-column-street,
+  .mat-column-email,
+  .mat-column-name {
+    max-width: 30%;
+  }
+  .mat-column-postalCode,
+  .mat-column-price {
+    max-width: 7%;
+  }
+  
