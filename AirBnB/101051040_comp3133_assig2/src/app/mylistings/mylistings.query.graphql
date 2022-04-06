@@ -1,0 +1,13 @@
+query getMyListings{
+    getMyListings {
+     name
+     city
+     price
+     email
+     street
+     username
+     listingId
+     postalCode
+     description
+    }
+}

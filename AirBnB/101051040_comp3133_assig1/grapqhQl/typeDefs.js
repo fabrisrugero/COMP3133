@@ -59,12 +59,13 @@ module.exports = gql`
 
   type Query {
     getListings: [Listing!]!
-    getBookings: [Booking]
-    getMyListings: [Listing]
-    getMyBookings: [Booking]
-    getListingsByName(name: String!): [Listing]
+    getBookings: [Booking!]!
+    getMyListings: [Listing!]!
+    getMyBookings: [Booking!]!
+    getAvailableListings: [Listing!]!
+    getListingsByName(name: String!): [Listing!]!
     login(username: String!, password: String!): User!
-    getListingsByPostalCodeOrCity(searchtext: String!): [Listing]
+    getListingsByPostalCodeOrCity(searchtext: String!): [Listing!]!
   }
 
   type Mutation {

@@ -1,0 +1,10 @@
+query getMyBookings{
+    getMyBookings {
+        username
+        listing_id
+        booking_id
+        booking_end
+        booking_date
+        booking_start
+    }
+}
