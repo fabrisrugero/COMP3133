@@ -36,10 +36,10 @@
         </ng-template>
       </ng-container>
 
-      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-      <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+      <mat-header-row *matHeaderRowDef="noDataColumns"></mat-header-row>
+      <mat-row *matRowDef="let row; columns: noDataColumns"></mat-row>
       <tr class="mat-row" *matNoDataRow>
-        <td class="mat-cell" colspan="6">No data</td>
+        <td class="mat-cell" colspan="6">you have no listings</td>
       </tr>
     </mat-table>
   </div>

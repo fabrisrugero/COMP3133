@@ -1,1 +1,57 @@
-<p>mybookings works!</p>
+<div class="booking-container mat-elevation-z8">
+  <div class="booking-loading-shade" *ngIf="isLoadingResults || isDataNull">
+    <mat-spinner *ngIf="isLoadingResults"></mat-spinner>
+    <div class="booking-IsDataNull" *ngIf="isDataNull">
+      something went wrong. Contact website administrator
+    </div>
+  </div>
+  <div class="booking-table-container">
+    <mat-table
+      [dataSource]="data"
+      class="booking-table"
+      matSort
+      matSortActive="booking_date"
+      matSortDisableClear
+      matSortDirection="desc"
+    >
+      <ng-container
+        *ngFor="let column of columns"
+        [matColumnDef]="column.columnDef"
+      >
+        <ng-container
+          *ngIf="column.columnDef !== 'booking_date'; else sorted_dates"
+        >
+          <mat-header-cell *matHeaderCellDef>
+            {{ column.header }}
+          </mat-header-cell>
+          <mat-cell *matCellDef="let row">
+            {{
+              column.columnDef.endsWith("_id")
+                ? column.cell(row)
+                : (column.cell(row) | date)
+            }}
+          </mat-cell>
+        </ng-container>
+        <ng-template #sorted_dates>
+          <mat-header-cell *matHeaderCellDef mat-sort-header disableClear>
+            {{ column.header }}
+          </mat-header-cell>
+          <mat-cell *matCellDef="let row">
+            {{ row.booking_date | date }}
+          </mat-cell>
+        </ng-template>
+      </ng-container>
+
+      <mat-header-row *matHeaderRowDef="noDataColumns"></mat-header-row>
+      <mat-row *matRowDef="let row; columns: noDataColumns"></mat-row>
+      <tr class="mat-row" *matNoDataRow>
+        <td class="mat-cell" colspan="6">you have no bookings</td>
+      </tr>
+    </mat-table>
+  </div>
+  <mat-paginator
+    [length]="resultsLength"
+    [pageSize]="30"
+    aria-label="Select page of bookings search results"
+  ></mat-paginator>
+</div>

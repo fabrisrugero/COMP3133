@@ -5,13 +5,11 @@ import { MatTableModule } from '@angular/material/table';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ListingsComponent } from './listings.component';
-import { CreateListingModule } from '../mylistings/create-listing/create-listing.module';
 
 @NgModule({
   declarations: [ListingsComponent],
   imports: [
     CommonModule,
-    CreateListingModule,
     MatTableModule,
     MatSortModule,
     MatPaginatorModule,

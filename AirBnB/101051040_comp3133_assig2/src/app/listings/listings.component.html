@@ -5,7 +5,6 @@
       something went wrong. Contact website administrator
     </div>
   </div>
-
   <div class="listing-table-container">
     <mat-table
       [dataSource]="data"
@@ -15,53 +14,35 @@
       matSortDisableClear
       matSortDirection="desc"
     >
-      <!-- Id Column -->
-      <ng-container matColumnDef="listingId">
-        <mat-header-cell *matHeaderCellDef>Id</mat-header-cell>
-        <mat-cell *matCellDef="let row">{{ row.listingId }}</mat-cell>
+      <ng-container
+        *ngFor="let column of columns"
+        [matColumnDef]="column.columnDef"
+      >
+        <ng-container *ngIf="column.columnDef !== 'price'; else sorted_prices">
+          <mat-header-cell *matHeaderCellDef>
+            {{ column.header }}
+          </mat-header-cell>
+          <mat-cell *matCellDef="let row">
+            {{ column.cell(row) }}
+          </mat-cell>
+        </ng-container>
+        <ng-template #sorted_prices>
+          <mat-header-cell *matHeaderCellDef mat-sort-header disableClear>
+            {{ column.header }}
+          </mat-header-cell>
+          <mat-cell *matCellDef="let row">
+            {{ row.price | currency }}
+          </mat-cell>
+        </ng-template>
       </ng-container>
 
-      <!-- Name Column -->
-      <ng-container matColumnDef="name">
-        <mat-header-cell *matHeaderCellDef>Name</mat-header-cell>
-        <mat-cell *matCellDef="let row">{{ row.name }}</mat-cell>
-      </ng-container>
-
-      <!-- Street Column -->
-      <ng-container matColumnDef="street">
-        <mat-header-cell *matHeaderCellDef>Street</mat-header-cell>
-        <mat-cell *matCellDef="let row">{{ row.street }}</mat-cell>
-      </ng-container>
-
-      <!-- PostalCode Column -->
-      <ng-container matColumnDef="postalCode">
-        <mat-header-cell *matHeaderCellDef>PostalCode</mat-header-cell>
-        <mat-cell *matCellDef="let row">{{ row.postalCode }}</mat-cell>
-      </ng-container>
-
-      <!-- Email Column -->
-      <ng-container matColumnDef="email">
-        <mat-header-cell *matHeaderCellDef>Email</mat-header-cell>
-        <mat-cell *matCellDef="let row">{{ row.email }}</mat-cell>
-      </ng-container>
-
-      <!-- Price Column -->
-      <ng-container matColumnDef="price">
-        <mat-header-cell *matHeaderCellDef mat-sort-header disableClear>
-          Price
-        </mat-header-cell>
-        <mat-cell *matCellDef="let row">{{ row.price | currency }}</mat-cell>
-      </ng-container>
-
-      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-      <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
-      <!-- Row shown when there is no matching data that will be provided to the wrapper table. -->
+      <mat-header-row *matHeaderRowDef="noDataColumns"></mat-header-row>
+      <mat-row *matRowDef="let row; columns: noDataColumns"></mat-row>
       <tr class="mat-row" *matNoDataRow>
-        <td class="mat-cell" colspan="6">No data</td>
+        <td class="mat-cell" colspan="6">No listings</td>
       </tr>
     </mat-table>
   </div>
-
   <mat-paginator
     [length]="resultsLength"
     [pageSize]="30"

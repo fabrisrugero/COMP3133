@@ -1,11 +1,12 @@
 import { Component, ViewChild, AfterViewInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { Listing, ListingsGQL } from '../../generated-types';
+import { Listing, GetMyListingsGQL } from '../../generated-types';
 import { CreateListingComponent } from '../mylistings/create-listing/create-listing.component';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { merge, of as observableOf } from 'rxjs';
 import { catchError, map, startWith, switchMap } from 'rxjs/operators';
+import { tableUtils } from '../table.utils';
 
 @Component({
   selector: 'app-mylistings',
@@ -17,46 +18,16 @@ export class MylistingsComponent implements AfterViewInit {
   isDataNull = false;
   data: Listing[] = [];
   isLoadingResults = true;
-  @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
-
-  columns = [
-    {
-      columnDef: 'listingId',
-      header: 'No.',
-      cell: (element: Listing) => `${element.listingId}`,
-    },
-    {
-      columnDef: 'name',
-      header: 'Name',
-      cell: (element: Listing) => `${element.name}`,
-    },
-    {
-      columnDef: 'street',
-      header: 'Street',
-      cell: (element: Listing) => `${element.street}`,
-    },
-    {
-      columnDef: 'postalCode',
-      header: 'PostalCode',
-      cell: (element: Listing) => `${element.postalCode}`,
-    },
-    {
-      columnDef: 'price',
-      header: 'Price',
-      cell: (element: Listing) => `${element.price}`,
-    },
-    {
-      columnDef: 'email',
-      header: 'Email',
-      cell: (element: Listing) => `${element.email}`,
-    },
-  ];
-  displayedColumns = this.columns.map((c) => c.columnDef);
+  columns = this.tablecols.listingCols;
+  @ViewChild(MatPaginator) paginator: MatPaginator;
+  noDataColumns = this.columns.map((c) => c.columnDef);
   constructor(
     private readonly dialog: MatDialog,
-    private readonly ListingsGql: ListingsGQL
+    private readonly tablecols: tableUtils,
+    private readonly ListingsGql: GetMyListingsGQL
   ) {}
+
   ngAfterViewInit(): void {
     this.sort.sortChange.subscribe(() => (this.paginator.pageIndex = 0));
     merge(this.sort.sortChange, this.paginator.page)
@@ -65,11 +36,7 @@ export class MylistingsComponent implements AfterViewInit {
         switchMap(() => {
           this.isLoadingResults = true;
           return this.ListingsGql.fetch().pipe(
-            map((result) => {
-              console.log(result.error);
-              console.log(result.errors);
-              return result.data.getListings;
-            }),
+            map((result) => result.data.getMyListings),
             catchError(() => observableOf(null))
           );
         }),

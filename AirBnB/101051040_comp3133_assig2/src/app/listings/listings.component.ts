@@ -4,6 +4,7 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { merge, of as observableOf } from 'rxjs';
 import { catchError, map, startWith, switchMap } from 'rxjs/operators';
+import { tableUtils } from '../table.utils';
 
 @Component({
   selector: 'app-Listings',
@@ -15,18 +16,12 @@ export class ListingsComponent implements AfterViewInit {
   isDataNull = false;
   data: Listing[] = [];
   isLoadingResults = true;
-  displayedColumns: string[] = [
-    'listingId',
-    'name',
-    'street',
-    'postalCode',
-    'price',
-    'email',
-  ];
-  @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
-
+  columns = this.tablecols.listingCols;
+  @ViewChild(MatPaginator) paginator: MatPaginator;
+  noDataColumns = this.columns.map((c) => c.columnDef);
   constructor(
+    private readonly tablecols: tableUtils,
     private readonly ListingsGql: ListingsGQL
   ) {}
 

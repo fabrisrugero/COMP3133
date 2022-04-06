@@ -1,14 +1,14 @@
 
 <div class="container">
-    <h2>Create new listing</h2>
+    <h2>Create new booking</h2>
     <mat-form-field appearance="outline">
-      <mat-label>listing Name</mat-label>
+      <mat-label>booking Name</mat-label>
       <input type="text" matInput [formControl]="ListingName" required />
       <mat-error *ngIf="ListingName.invalid">
         {{ getListingNameError() }}
       </mat-error>
     </mat-form-field>
-    <button mat-raised-button color="primary" (click)="createListing()">
+    <button mat-raised-button color="primary" (click)="createBooking()">
       Create
     </button>
   </div>

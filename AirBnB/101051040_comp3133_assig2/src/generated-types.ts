@@ -155,6 +155,13 @@ export type GetAvailableListingsQueryVariables = Exact<{ [key: string]: never; }
 
 export type GetAvailableListingsQuery = { __typename?: 'Query', getAvailableListings: Array<{ __typename?: 'Listing', name: string, city: string, price: number, email: string, street: string, username: string, listingId: string, postalCode: string, description: string }> };
 
+export type CreateBookingMutationVariables = Exact<{
+  data: BookingInput;
+}>;
+
+
+export type CreateBookingMutation = { __typename?: 'Mutation', createBooking: { __typename?: 'Booking', username: string, listing_id: string, booking_id: string, booking_end: string, booking_date: string, booking_start: string } };
+
 export type GetBookingsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
@@ -164,13 +171,6 @@ export type ListingsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
 export type ListingsQuery = { __typename?: 'Query', getListings: Array<{ __typename?: 'Listing', name: string, city: string, price: number, email: string, street: string, username: string, listingId: string, postalCode: string, description: string }> };
-
-export type CreateBookingMutationVariables = Exact<{
-  data: BookingInput;
-}>;
-
-
-export type CreateBookingMutation = { __typename?: 'Mutation', createBooking: { __typename?: 'Booking', username: string, listing_id: string, booking_id: string, booking_end: string, booking_date: string, booking_start: string } };
 
 export type GetMyBookingsQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -236,6 +236,29 @@ export const GetAvailableListingsDocument = gql`
       super(apollo);
     }
   }
+export const CreateBookingDocument = gql`
+    mutation createBooking($data: BookingInput!) {
+  createBooking(bookingInput: $data) {
+    username
+    listing_id
+    booking_id
+    booking_end
+    booking_date
+    booking_start
+  }
+}
+    `;
+
+  @Injectable({
+    providedIn: 'root'
+  })
+  export class CreateBookingGQL extends Apollo.Mutation<CreateBookingMutation, CreateBookingMutationVariables> {
+    document = CreateBookingDocument;
+    
+    constructor(apollo: Apollo.Apollo) {
+      super(apollo);
+    }
+  }
 export const GetBookingsDocument = gql`
     query getBookings {
   getBookings {
@@ -280,29 +303,6 @@ export const ListingsDocument = gql`
   })
   export class ListingsGQL extends Apollo.Query<ListingsQuery, ListingsQueryVariables> {
     document = ListingsDocument;
-    
-    constructor(apollo: Apollo.Apollo) {
-      super(apollo);
-    }
-  }
-export const CreateBookingDocument = gql`
-    mutation createBooking($data: BookingInput!) {
-  createBooking(bookingInput: $data) {
-    username
-    listing_id
-    booking_id
-    booking_end
-    booking_date
-    booking_start
-  }
-}
-    `;
-
-  @Injectable({
-    providedIn: 'root'
-  })
-  export class CreateBookingGQL extends Apollo.Mutation<CreateBookingMutation, CreateBookingMutationVariables> {
-    document = CreateBookingDocument;
     
     constructor(apollo: Apollo.Apollo) {
       super(apollo);

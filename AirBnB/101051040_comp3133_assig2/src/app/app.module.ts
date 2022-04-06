@@ -1,3 +1,4 @@
+import { tableUtils } from './table.utils';
 import { Interceptor } from './Interceptor';
 import { ListingsModule } from './listings/listings.module';
 import { SignUpModule } from './auth/sign-up/sign-up.module';
@@ -85,6 +86,7 @@ const error = onError(({ graphQLErrors, networkError }) => {
     },
     LocalStorageService,
     JWTTokenService,
+    tableUtils
   ],
   bootstrap: [AppComponent],
 })

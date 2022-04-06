@@ -14,6 +14,7 @@ import { LocalStorageService } from '../auth.storageservice';
 export class LoginComponent implements OnInit {
   email = new FormControl('', [Validators.required, Validators.email]);
   password = new FormControl('', [Validators.required]);
+  loginError: string = '';
 
   constructor(
     private readonly router: Router,
@@ -50,9 +51,7 @@ export class LoginComponent implements OnInit {
           this.authStorageService.set('jwtToken', result.token);
           this.jwtService.setToken(result.token);
           this.router.navigate(['/']);
-        } else {
-          console.log(result.error);
-        }
+        } else this.loginError = result.error;
       });
   }
 }

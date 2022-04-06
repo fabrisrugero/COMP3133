@@ -1,5 +1,6 @@
 <div class="container">
   <h1>AirBnB</h1>
+  <h3 *ngIf="loginError">{{ loginError }}</h3>
   <mat-form-field appearance="outline">
     <mat-label>Email</mat-label>
     <input type="email" matInput [formControl]="email" required />
