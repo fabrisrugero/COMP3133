@@ -17,6 +17,7 @@ function generateToken(user) {
 module.exports = {
   Mutation: {
     async register(_, { userInput }) {
+      console.log(userInput);
       const { username, password } = userInput;
       const user = await User.findOne({ username }).exec();
       if (user) throw new Error("Username is taken");
