@@ -1,7 +1,7 @@
 import { User } from './../../../generated-types';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { FormControl, Validators } from '@angular/forms';
+import { Validators, FormBuilder } from '@angular/forms';
 import { LoginService } from './login.service';
 import { JWTTokenService } from '../auth.jwtservice';
 import { LocalStorageService } from '../auth.storageservice';
@@ -12,42 +12,31 @@ import { LocalStorageService } from '../auth.storageservice';
   styleUrls: ['./login.component.scss'],
 })
 export class LoginComponent implements OnInit {
-  email = new FormControl('', [Validators.required, Validators.email]);
-  password = new FormControl('', [Validators.required]);
   loginError: string = '';
-
+  loginForm = this.formBuilder.group({
+    username: ['', [Validators.required]],
+    password: ['', [Validators.required]],
+  });
   constructor(
     private readonly router: Router,
-    private jwtService: JWTTokenService,
+    private readonly formBuilder: FormBuilder,
+    private readonly jwtService: JWTTokenService,
     private readonly loginService: LoginService,
-    private authStorageService: LocalStorageService
+    private readonly authStorageService: LocalStorageService
   ) {}
 
   ngOnInit(): void {}
-
-  getEmailErrorMessage() {
-    if (this.email.hasError('required')) return 'You must enter a value.';
-    return this.email.hasError('email') ? 'Not a valid email' : '';
+  get username() {
+    return this.loginForm.get('username');
   }
-
-  getPasswordErrorMessage() {
-    if (this.password.hasError('required')) return 'You must enter a value.';
-    return '';
+  get password() {
+    return this.loginForm.get('password');
   }
-
-  isUser(pet: User | { error: string }): pet is User {
-    return (pet as User).token !== undefined;
-  }
-
   onSubmit() {
-    let loginRequest = {
-      username: this.email.value,
-      password: this.password.value,
-    };
     this.loginService
-      .login(loginRequest)
+      .login(this.loginForm.value)
       .subscribe((result: User | { error: string }) => {
-        if (this.isUser(result)) {
+        if (this.loginService.isUser(result)) {
           this.authStorageService.set('jwtToken', result.token);
           this.jwtService.setToken(result.token);
           if (result.type === 'admin') this.router.navigate(['/mylistings']);

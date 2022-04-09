@@ -1,14 +1,48 @@
-
-<div class="container">
+<form [formGroup]="bookingForm" (ngSubmit)="onSubmit()">
+  <div class="container">
     <h2>Create new booking</h2>
+    <h3 *ngIf="bookingError">{{ bookingError }}</h3>
     <mat-form-field appearance="outline">
-      <mat-label>booking Name</mat-label>
-      <input type="text" matInput [formControl]="ListingName" required />
-      <mat-error *ngIf="ListingName.invalid">
-        {{ getListingNameError() }}
+      <mat-label>Listing ID</mat-label>
+      <input type="text" matInput formControlName="listing_id" required />
+      <mat-error *ngIf="listingId?.hasError('required')">
+        You must enter a listing ID e.g L001.
       </mat-error>
     </mat-form-field>
-    <button mat-raised-button color="primary" (click)="createBooking()">
-      Create
+    <mat-form-field appearance="fill">
+      <mat-label>Enter a date range</mat-label>
+      <mat-date-range-input [rangePicker]="picker">
+        <input
+          matStartDate
+          formControlName="booking_start"
+          placeholder="Start date"
+        />
+        <input
+          matEndDate
+          formControlName="booking_end"
+          placeholder="End date"
+        />
+      </mat-date-range-input>
+      <mat-hint>MM/DD/YYYY - MM/DD/YYYY</mat-hint>
+      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-date-range-picker #picker></mat-date-range-picker>
+      <mat-error *ngIf="start?.hasError('matStartDateInvalid')"
+        >Invalid start date</mat-error
+      >
+      <mat-error *ngIf="end?.hasError('matEndDateInvalid')"
+        >Invalid end date</mat-error
+      >
+      <mat-error *ngIf="end?.hasError('required')"
+        >end date is required</mat-error
+      >
+      <mat-error *ngIf="start?.hasError('required')"
+        >start date is required</mat-error
+      >
+    </mat-form-field>
+    <input type="hidden" formControlName="booking_date" />
+    <input type="hidden" formControlName="booking_id" />
+    <button [disabled]="!bookingForm.valid" mat-raised-button color="primary">
+      Create Booking
     </button>
   </div>
+</form>

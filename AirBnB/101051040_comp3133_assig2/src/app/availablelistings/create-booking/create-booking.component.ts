@@ -1,10 +1,11 @@
+import { BookingInput } from './../../../generated-types';
 import {
   CreateBookingGQL,
   GetAvailableListingsDocument,
 } from '../../../generated-types';
 import { Component, OnInit } from '@angular/core';
 import { MatDialogRef } from '@angular/material/dialog';
-import { FormControl, Validators } from '@angular/forms';
+import {  Validators, FormBuilder } from '@angular/forms';
 
 @Component({
   selector: 'app-create-booking',
@@ -12,34 +13,36 @@ import { FormControl, Validators } from '@angular/forms';
   styleUrls: ['./create-booking.component.scss'],
 })
 export class CreateBookingComponent implements OnInit {
-  ListingName = new FormControl('', [Validators.required]);
+  bookingError: string;
+  bookingForm = this.formBuilder.group({
+    listing_id: ['', [Validators.required]],
+    booking_end: ['', [Validators.required]],
+    booking_start: ['', [Validators.required]],
+    booking_date: [new Date(), [Validators.required]],
+    booking_id: [Math.floor(Math.random() * 1000), [Validators.required]],
+  });
 
   constructor(
+    private readonly formBuilder: FormBuilder,
     private readonly createBookingGQL: CreateBookingGQL,
     private readonly dialogRef: MatDialogRef<CreateBookingComponent>
   ) {}
 
   ngOnInit(): void {}
-
-  getListingNameError() {
-    if (this.ListingName.hasError('required')) {
-      return 'You must enter a value.';
-    }
-    return '';
+  get end() {
+    return this.bookingForm.get('booking_end');
   }
-
-  createBooking() {
+  get start() {
+    return this.bookingForm.get('booking_start');
+  }
+  get listingId() {
+    return this.bookingForm.get('listing_id');
+  }
+  onSubmit() {
+    this.bookingError = '';
     this.createBookingGQL
       .mutate(
-        {
-          data: {
-            booking_date: 'String',
-            booking_end: 'String',
-            booking_id: 'String',
-            booking_start: 'String',
-            listing_id: 'String',
-          },
-        },
+        { data: this.bookingForm.value as BookingInput },
         {
           refetchQueries: [
             {
@@ -48,8 +51,12 @@ export class CreateBookingComponent implements OnInit {
           ],
         }
       )
-      .subscribe(() => {
-        this.dialogRef.close();
+      .subscribe((result) => {
+        if (result.errors)
+          this.bookingError = JSON.stringify(
+            result.errors.map((error) => error.message)
+          );
+        else this.dialogRef.close();
       });
   }
 }

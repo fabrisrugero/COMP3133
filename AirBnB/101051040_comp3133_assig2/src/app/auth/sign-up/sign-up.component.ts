@@ -35,11 +35,11 @@ export class SignUpComponent implements OnInit {
 
   constructor(
     private readonly router: Router,
-    private formBuilder: FormBuilder,
-    private jwtService: JWTTokenService,
+    private readonly formBuilder: FormBuilder,
+    private readonly jwtService: JWTTokenService,
     private readonly loginService: LoginService,
     private readonly createUserGql: CreateUserGQL,
-    private authStorageService: LocalStorageService
+    private readonly authStorageService: LocalStorageService
   ) {}
 
   ngOnInit(): void {}
@@ -74,9 +74,6 @@ export class SignUpComponent implements OnInit {
         : 'password is too short'
       : '';
   }
-  isUser(result: User | { error: string }): result is User {
-    return (result as User).token !== undefined;
-  }
   onSubmit() {
     this.signUpError = '';
     let data: UserInput = this.registerForm.value;
@@ -93,7 +90,7 @@ export class SignUpComponent implements OnInit {
         })
       )
       .subscribe((result: User | { error: string }) => {
-        if (this.isUser(result)) {
+        if (this.loginService.isUser(result)) {
           this.authStorageService.set('jwtToken', result.token);
           this.jwtService.setToken(result.token);
           if (result.type === 'admin') this.router.navigate(['/mylistings']);
