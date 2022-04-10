@@ -39,7 +39,6 @@ export class CreateSearchComponent {
       : '';
   }
   onSubmit() {
-    const { search, text } = this.searchForm.value;
-    this.router.navigate([`/listings?search=${search}&text=${text}`]);
+    this.router.navigate(['/'], { queryParams: this.searchForm.value });
   }
 }

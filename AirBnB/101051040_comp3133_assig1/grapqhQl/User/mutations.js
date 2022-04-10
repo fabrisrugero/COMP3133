@@ -11,7 +11,7 @@ module.exports = {
       encryptedPassword = await bcrypt.hash(password, 12);
       const newUser = new User({ ...userInput, encryptedPassword });
       const res = await newUser.save();
-      return { success: true };
+      return true;
     },
   },
 };

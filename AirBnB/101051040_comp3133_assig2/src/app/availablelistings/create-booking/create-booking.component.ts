@@ -19,7 +19,10 @@ export class CreateBookingComponent implements OnInit {
     booking_end: ['', [Validators.required]],
     booking_start: ['', [Validators.required]],
     booking_date: [new Date(), [Validators.required]],
-    booking_id: [Math.floor(Math.random() * 1000), [Validators.required]],
+    booking_id: [
+      Math.floor(Math.random() * 1000).toString(),
+      [Validators.required],
+    ],
   });
 
   constructor(
@@ -40,6 +43,7 @@ export class CreateBookingComponent implements OnInit {
   }
   onSubmit() {
     this.bookingError = '';
+    console.log(JSON.stringify(this.bookingForm.value));
     this.createBookingGQL
       .mutate(
         { data: this.bookingForm.value as BookingInput },

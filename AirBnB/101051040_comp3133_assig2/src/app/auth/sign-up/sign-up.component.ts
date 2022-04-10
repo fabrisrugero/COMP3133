@@ -1,5 +1,5 @@
 import { User } from './../../../generated-types';
-import { Component} from '@angular/core';
+import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormBuilder, Validators } from '@angular/forms';
 import { concatMap } from 'rxjs';

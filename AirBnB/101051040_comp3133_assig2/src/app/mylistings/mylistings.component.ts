@@ -1,4 +1,9 @@
-import { Component, ViewChild, AfterViewInit } from '@angular/core';
+import {
+  Component,
+  ViewChild,
+  AfterViewInit,
+  // ChangeDetectorRef,
+} from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Listing, GetMyListingsGQL } from '../../generated-types';
 import { CreateListingComponent } from '../mylistings/create-listing/create-listing.component';
@@ -23,6 +28,7 @@ export class MylistingsComponent implements AfterViewInit {
   @ViewChild(MatPaginator) paginator: MatPaginator;
   noDataColumns = this.columns.map((c) => c.columnDef);
   constructor(
+    // private cdr: ChangeDetectorRef,
     private readonly dialog: MatDialog,
     private readonly tablecols: tableUtils,
     private readonly ListingsGql: GetMyListingsGQL
@@ -49,9 +55,15 @@ export class MylistingsComponent implements AfterViewInit {
         })
       )
       .subscribe((data) => (this.data = data));
+    console.log(this.data);
+    // this.cdr.detectChanges();
   }
 
   onFabClick() {
-    this.dialog.open(CreateListingComponent);
+    this.dialog.open(CreateListingComponent, {
+      autoFocus: false,
+      maxHeight: '90vh',
+      minWidth: '500px',
+    });
   }
 }

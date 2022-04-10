@@ -38,7 +38,6 @@ export class ListingsComponent implements AfterViewInit, OnInit {
   }
   ngOnInit(): void {
     this.route.queryParams.subscribe((params) => {
-      console.log(params);
       if (params['search'] === 'name' && params['text'])
         this.search = { name: params['text'], searchtext: '' };
       else this.search = { searchtext: params['text'], name: '' };
@@ -51,6 +50,7 @@ export class ListingsComponent implements AfterViewInit, OnInit {
       .pipe(
         startWith({}),
         switchMap(() => {
+          console.log(this.search);
           this.isLoadingResults = true;
           if (this.search.searchtext)
             return this.ListingByPostalCodeOrCityGqdl.fetch(this.search).pipe(

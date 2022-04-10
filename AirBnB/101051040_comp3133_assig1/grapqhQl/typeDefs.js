@@ -69,7 +69,7 @@ module.exports = gql`
   }
 
   type Mutation {
-    register(userInput: UserInput!): User!
+    register(userInput: UserInput!): Boolean!
     deleteListing(listingId: String!): String!
     deleteBooking(bookingId: String!): String!
     createListing(listingInput: ListingInput!): Listing!

@@ -70,7 +70,7 @@ export type Mutation = {
   createListing: Listing;
   deleteBooking: Scalars['String'];
   deleteListing: Scalars['String'];
-  register: User;
+  register: Scalars['Boolean'];
 };
 
 
@@ -148,7 +148,7 @@ export type CreateUserMutationVariables = Exact<{
 }>;
 
 
-export type CreateUserMutation = { __typename?: 'Mutation', register: { __typename?: 'User', type: string, email: string, token: string, username: string } };
+export type CreateUserMutation = { __typename?: 'Mutation', register: boolean };
 
 export type GetAvailableListingsQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -205,12 +205,7 @@ export type GetMyListingsQuery = { __typename?: 'Query', getMyListings: Array<{ 
 
 export const CreateUserDocument = gql`
     mutation createUser($data: UserInput!) {
-  register(userInput: $data) {
-    type
-    email
-    token
-    username
-  }
+  register(userInput: $data)
 }
     `;
 

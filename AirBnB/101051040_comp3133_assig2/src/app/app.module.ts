@@ -32,7 +32,8 @@ const error = onError(({ graphQLErrors, networkError }) => {
       )
     );
 
-  if (networkError) console.log(`[Network error]: ${networkError}`);
+  if (networkError)
+    console.log(`[Network error]: ${JSON.stringify(networkError)}`);
 });
 
 @NgModule({
@@ -74,6 +75,7 @@ const error = onError(({ graphQLErrors, networkError }) => {
               errorPolicy: 'all',
             },
             mutate: {
+              fetchPolicy: 'network-only',
               errorPolicy: 'all',
             },
           },
@@ -88,7 +90,7 @@ const error = onError(({ graphQLErrors, networkError }) => {
     },
     LocalStorageService,
     JWTTokenService,
-    tableUtils
+    tableUtils,
   ],
   bootstrap: [AppComponent],
 })
