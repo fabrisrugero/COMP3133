@@ -1,11 +1,11 @@
-import { BookingInput } from './../../../generated-types';
 import {
+  BookingInput,
   CreateBookingGQL,
   GetAvailableListingsDocument,
 } from '../../../generated-types';
 import { Component, OnInit } from '@angular/core';
 import { MatDialogRef } from '@angular/material/dialog';
-import {  Validators, FormBuilder } from '@angular/forms';
+import { Validators, FormBuilder } from '@angular/forms';
 
 @Component({
   selector: 'app-create-booking',

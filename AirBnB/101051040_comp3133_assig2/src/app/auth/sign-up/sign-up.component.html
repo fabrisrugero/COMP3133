@@ -49,11 +49,11 @@
       </mat-select>
       <mat-icon matSuffix>gavel</mat-icon>
       <mat-error *ngIf="type?.hasError('required')">
-        role is required.
+       you must choose a role.
       </mat-error>
     </mat-form-field>
     <button [disabled]="!registerForm.valid" mat-raised-button color="primary">
-      SignUp
+      Create account
     </button>
   </div>
 </form>

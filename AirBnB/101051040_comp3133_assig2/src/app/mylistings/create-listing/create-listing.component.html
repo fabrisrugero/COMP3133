@@ -1,14 +1,81 @@
-
-<div class="container">
-    <h2>Create new listing</h2>
+<form [formGroup]="listingForm" (ngSubmit)="onSubmit()">
+  <div class="container">
+    <h1>AirBnB</h1>
+    <h3 *ngIf="listingError">{{ listingError }}</h3>
     <mat-form-field appearance="outline">
-      <mat-label>listing Name</mat-label>
-      <input type="text" matInput [formControl]="ListingName" required />
-      <mat-error *ngIf="ListingName.invalid">
-        {{ getListingNameError() }}
+      <mat-label>Listing name</mat-label>
+      <input type="text" matInput formControlName="name" required />
+      <mat-icon matSuffix>group icon</mat-icon>
+      <mat-error *ngIf="name?.hasError('required')">
+        You must enter a listing name.
       </mat-error>
     </mat-form-field>
-    <button mat-raised-button color="primary" (click)="createListing()">
-      Create
+    <mat-form-field appearance="outline">
+      <mat-label>City</mat-label>
+      <input type="city" matInput formControlName="city" required />
+      <mat-icon matSuffix>cake icon</mat-icon>
+      <mat-error *ngIf="city?.hasError('required')">
+        You must enter a city.
+      </mat-error>
+    </mat-form-field>
+    <mat-form-field appearance="outline">
+      <mat-label>Email</mat-label>
+      <input type="email" matInput formControlName="email" required />
+      <mat-icon matSuffix>Email</mat-icon>
+      <mat-error *ngIf="email?.invalid">
+        {{ getEmailErrorMessage() }}
+      </mat-error>
+    </mat-form-field>
+    <mat-form-field appearance="outline">
+      <mat-label>Street Name</mat-label>
+      <input type="text" matInput formControlName="street" required />
+      <mat-icon matSuffix>fullscreen icon</mat-icon>
+      <mat-error *ngIf="street?.hasError('required')">
+        You must enter a street.
+      </mat-error>
+    </mat-form-field>
+    <mat-form-field appearance="outline">
+      <mat-label>Listing Id</mat-label>
+      <input type="text" matInput formControlName="listingId" required />
+      <mat-icon matSuffix>adjust icon</mat-icon>
+      <mat-error *ngIf="listingId?.hasError('required')">
+        You must enter a listingId.
+      </mat-error>
+    </mat-form-field>
+    <mat-form-field appearance="outline">
+      <mat-label>Postal Code</mat-label>
+      <input type="text" matInput formControlName="postalCode" required />
+      <mat-icon matSuffix>gavel</mat-icon>
+      <mat-error *ngIf="postalCode?.hasError('required')">
+        You must enter a postalCode.
+      </mat-error>
+    </mat-form-field>
+    <mat-form-field appearance="outline">
+      <mat-label>Price</mat-label>
+      <input type="number" matInput formControlName="price" required />
+      <mat-icon matSuffix>poll icon</mat-icon>
+      <mat-error *ngIf="price?.invalid">
+        {{ getPriceErrorMessage() }}.
+      </mat-error>
+    </mat-form-field>
+    <mat-form-field appearance="outline">
+      <mat-label>Description</mat-label>
+      <textarea
+        required
+        matInput
+        cdkTextareaAutosize
+        cdkAutosizeMinRows="1"
+        cdkAutosizeMaxRows="5"
+        formControlName="description"
+        #autosize="cdkTextareaAutosize"
+      ></textarea>
+      <mat-icon matSuffix>school icon</mat-icon>
+      <mat-error *ngIf="description?.invalid">
+        {{ getDescriptionErrorMessage() }}
+      </mat-error>
+    </mat-form-field>
+    <button [disabled]="!listingForm.valid" mat-raised-button color="primary">
+      Create Listing
     </button>
   </div>
+</form>

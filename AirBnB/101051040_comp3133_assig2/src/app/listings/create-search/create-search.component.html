@@ -1,0 +1,26 @@
+<form [formGroup]="searchForm" (ngSubmit)="onSubmit()">
+  <div class="container">
+    <h1>AirBnB</h1>
+    <mat-form-field appearance="outline">
+      <mat-label>Search Text</mat-label>
+      <input type="text" matInput formControlName="text" required />
+      <mat-icon matSuffix>person_outline</mat-icon>
+      <mat-error *ngIf="text?.invalid">{{ getTextErrorMessage() }}</mat-error>
+    </mat-form-field>
+    <mat-form-field appearance="outline">
+      <mat-label>Search Field</mat-label>
+      <mat-select formControlName="search">
+        <mat-option *ngFor="let field of fields" [value]="field.field">
+          {{ field.fieldValue }}
+        </mat-option>
+      </mat-select>
+      <mat-icon matSuffix>gavel</mat-icon>
+      <mat-error *ngIf="search?.hasError('required')">
+        You must choose a search field.
+      </mat-error>
+    </mat-form-field>
+    <button [disabled]="!searchForm.valid" mat-raised-button color="primary">
+      Search listings
+    </button>
+  </div>
+</form>

@@ -1,5 +1,5 @@
 import { User } from './../../../generated-types';
-import { Component, OnInit } from '@angular/core';
+import { Component} from '@angular/core';
 import { Router } from '@angular/router';
 import { FormBuilder, Validators } from '@angular/forms';
 import { concatMap } from 'rxjs';
@@ -18,7 +18,7 @@ interface roles {
   templateUrl: './sign-up.component.html',
   styleUrls: ['./sign-up.component.scss'],
 })
-export class SignUpComponent implements OnInit {
+export class SignUpComponent {
   signUpError: string = '';
   types: roles[] = [
     { viewValue: 'customer', value: 'customer' },
@@ -41,8 +41,6 @@ export class SignUpComponent implements OnInit {
     private readonly createUserGql: CreateUserGQL,
     private readonly authStorageService: LocalStorageService
   ) {}
-
-  ngOnInit(): void {}
   get type() {
     return this.registerForm.get('type');
   }
