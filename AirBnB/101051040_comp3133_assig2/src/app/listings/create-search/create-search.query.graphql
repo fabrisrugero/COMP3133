@@ -1,0 +1,27 @@
+query getListingsByPostalCodeOrCity($searchtext: String!) {
+    getListingsByPostalCodeOrCity(searchtext: $searchtext) {
+     name
+     city
+     price
+     email
+     street
+     username
+     listingId
+     postalCode
+     description
+    }
+}
+
+query getListingsByName($name: String!) {
+    getListingsByName(name: $name) {
+     name
+     city
+     price
+     email
+     street
+     username
+     listingId
+     postalCode
+     description
+    }
+}

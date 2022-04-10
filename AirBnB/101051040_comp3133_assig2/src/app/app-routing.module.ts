@@ -1,3 +1,4 @@
+import { CreateSearchComponent } from './listings/create-search/create-search.component';
 import { ListingsComponent } from './listings/listings.component';
 import { SignUpComponent } from './auth/sign-up/sign-up.component';
 import { LoginComponent } from './auth/login/login.component';
@@ -16,6 +17,11 @@ const routes: Routes = [
     path: '',
     pathMatch: 'full',
     component: ListingsComponent,
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'search',
+    component: CreateSearchComponent,
     canActivate: [AuthGuard],
   },
   {

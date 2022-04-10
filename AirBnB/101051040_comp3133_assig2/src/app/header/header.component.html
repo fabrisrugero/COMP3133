@@ -3,6 +3,7 @@
     <h1>AirBnB</h1>
   </a>
   <ul class="nav">
+    <a routerLink="/search">Search</a>
     <ng-container *ngIf="(isLoggedIn$ | async) === 1; else admin">
       <li><a routerLink="/availablelistings">AvailableListings</a></li>
       <li><a routerLink="/mybookings">MyBookings</a></li>

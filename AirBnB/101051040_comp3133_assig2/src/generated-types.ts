@@ -167,6 +167,20 @@ export type GetBookingsQueryVariables = Exact<{ [key: string]: never; }>;
 
 export type GetBookingsQuery = { __typename?: 'Query', getBookings: Array<{ __typename?: 'Booking', username: string, listing_id: string, booking_id: string, booking_end: string, booking_date: string, booking_start: string }> };
 
+export type GetListingsByPostalCodeOrCityQueryVariables = Exact<{
+  searchtext: Scalars['String'];
+}>;
+
+
+export type GetListingsByPostalCodeOrCityQuery = { __typename?: 'Query', getListingsByPostalCodeOrCity: Array<{ __typename?: 'Listing', name: string, city: string, price: number, email: string, street: string, username: string, listingId: string, postalCode: string, description: string }> };
+
+export type GetListingsByNameQueryVariables = Exact<{
+  name: Scalars['String'];
+}>;
+
+
+export type GetListingsByNameQuery = { __typename?: 'Query', getListingsByName: Array<{ __typename?: 'Listing', name: string, city: string, price: number, email: string, street: string, username: string, listingId: string, postalCode: string, description: string }> };
+
 export type ListingsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
@@ -277,6 +291,58 @@ export const GetBookingsDocument = gql`
   })
   export class GetBookingsGQL extends Apollo.Query<GetBookingsQuery, GetBookingsQueryVariables> {
     document = GetBookingsDocument;
+    
+    constructor(apollo: Apollo.Apollo) {
+      super(apollo);
+    }
+  }
+export const GetListingsByPostalCodeOrCityDocument = gql`
+    query getListingsByPostalCodeOrCity($searchtext: String!) {
+  getListingsByPostalCodeOrCity(searchtext: $searchtext) {
+    name
+    city
+    price
+    email
+    street
+    username
+    listingId
+    postalCode
+    description
+  }
+}
+    `;
+
+  @Injectable({
+    providedIn: 'root'
+  })
+  export class GetListingsByPostalCodeOrCityGQL extends Apollo.Query<GetListingsByPostalCodeOrCityQuery, GetListingsByPostalCodeOrCityQueryVariables> {
+    document = GetListingsByPostalCodeOrCityDocument;
+    
+    constructor(apollo: Apollo.Apollo) {
+      super(apollo);
+    }
+  }
+export const GetListingsByNameDocument = gql`
+    query getListingsByName($name: String!) {
+  getListingsByName(name: $name) {
+    name
+    city
+    price
+    email
+    street
+    username
+    listingId
+    postalCode
+    description
+  }
+}
+    `;
+
+  @Injectable({
+    providedIn: 'root'
+  })
+  export class GetListingsByNameGQL extends Apollo.Query<GetListingsByNameQuery, GetListingsByNameQueryVariables> {
+    document = GetListingsByNameDocument;
     
     constructor(apollo: Apollo.Apollo) {
       super(apollo);

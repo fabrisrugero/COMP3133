@@ -1,3 +1,4 @@
+import { CreateSearchModule } from './listings/create-search/create-search.module';
 import { tableUtils } from './table.utils';
 import { Interceptor } from './Interceptor';
 import { ListingsModule } from './listings/listings.module';
@@ -48,6 +49,7 @@ const error = onError(({ graphQLErrors, networkError }) => {
     BookingsModule,
     MybookingsModule,
     MylistingsModule,
+    CreateSearchModule,
     AvailablelistingsModule,
     BrowserAnimationsModule,
   ],
